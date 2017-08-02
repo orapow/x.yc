@@ -1,0 +1,33 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商户审核中</title>
+    <style type="text/css">
+        .ger { text-align: center; border: none; margin: 0; }
+    </style>
+</head>
+<body style="background:#f4f4f4;">
+    <div class="guanli">
+        <div class="ger">
+            <img src="$!cu.headimg" onerror="this.src='/img/wx/gh.png'" style="display:block;float:none;margin:0 auto;" />
+            <h2>#if($cu.name.length==0)$cu.nickname#else$cu.name#end</h2>
+            <div class="clear"></div>
+        </div>
+        <p style="font-size:1.5em;text-align:center; padding-top:30px; padding-bottom:15px; line-height:26px;">
+            #if($cu.audit==1)
+            <span style="color:gray;">您的资料已经提交，正在审核中...<br />预计2个工作日。提交时间：<br />（$cu.atime.tostring("yyyy-MM-dd HH:mm:ss")）</span>
+            #elseif($cu.audit==2)
+            <span style="color:green;">恭喜！您已经成为我们的商户用户，感谢有你。</span>
+            #elseif($cu.audit==3)
+            <span style="color:red;">您的商户资料被驳回！！！<br />原因为：$cu.remark</span>
+            <br />
+            <br />
+            <a href="/wx/mch/reg.html" class="btn" style="background-color:green;">立即修改</a>
+            #end
+        </p>
+        <a class="btn" style="text-align:center;margin:10px 0 0 0;" href="tel:$cfg.stel">联系我们</a>
+    </div>
+    #parse("wx/_foot.html")
+</body>
+</html>

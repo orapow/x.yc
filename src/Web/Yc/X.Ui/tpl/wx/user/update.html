@@ -1,0 +1,31 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商户登记</title>
+</head>
+<body style="background:#f4f4f4;">
+    <input type="file" id="bt_file" onchange="upload(this)" style="display:none;" />
+    <div class="guanli">
+        <ul>
+            <li>城市：<select class="select02" style="float: none;" id="ct">#foreach($c in $cs)#if($cu.city==$c.value)<option value="$c.value" selected="selected">$c.name</option>#else<option value="$c.value">$c.name</option>#end#end</select></li>
+            <li>姓名：<input type="text" id="cn" value="$!cu.name" /></li>
+        </ul>
+        <div class="qr"><a href="javascript:;" style="color:white;display:block;height:100%;" onclick="save()">保存</a></div>
+    </div>
+    #parse("wx/_foot.html")
+    <script type="text/javascript">
+        function save() {
+            var d = {
+                ct: $("#ct").val(),
+                cn: $("#cn").val()
+            }
+            if (!cn) { alert("姓名不能为空"); return; }
+            doapi("wx.user.save", d, function (d) {
+                if (!d.issucc) return;
+                document.location.reload();
+            })
+        }
+    </script>
+</body>
+</html>

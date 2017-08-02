@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>提现记录 - $cfg.name</title>
+    <style type="text/css">
+        td.ops { white-space: normal; }
+        .gd { width: 40px; border: 1px solid #ff6a00; float: left; margin: 0 2px 2px 0; }
+        .table td.c_gs { overflow: auto; white-space: normal; }
+        .table td.c_rec_man { white-space: normal; }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <span class="main">提现记录</span> - <span class="sub">会员管理</span>
+    </div>
+    <div class="search">
+        <x:form>
+            <x:pick name="st" src="loc:全部|待审核|已审核" mode="2" def="2" />
+            <x:text name="key" tip="用户" size="2" />
+            <button type="submit" class="btn btn-primary"><i class="icon-search"></i>搜索</button>
+            <button type="reset" class="btn"><i class="icon-remove"></i>清除</button>
+        </x:form>
+    </div>
+    <div class="gridpanel">
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            $("form:eq(0)").xform({
+                callback: function (d) {
+                    d.page = 1;
+                    g.getlist(d);
+                }
+            });
+            $("#li_st .btn").click(function () {
+                $("form:eq(0)").submit();
+            });
+        });
+
+        var cfg = {
+            el: ".gridpanel",
+            searchcon: { page: 1, limit: 30, st: 2 },
+            api: "mgr.cash.list",
+            fs: [
+                { t: "用户", f: "<img src='{up}' style='height:45px;'/> {un}{name}", w: 120, align: "left" },
+                { t: "提现金额", f: "{amount}", w: 80, align: "center" },
+                { t: "发起时间", f: "{ctime}", w: 80, align: "center" },
+                { t: "审核状态", f: "{status}", w: 60, align: "center" },
+                { t: "备注", f: "{remark}", w: 320, align: "left" },
+            ],
+            btns: []
+        };
+
+        cfg.getbtns = function (o) {
+            var btns = [];
+            if (o.status == 1) {
+                btns.push({ txt: "同意", ico: "ok", act: "accept" });
+                btns.push({ txt: "拒绝", ico: "remove", act: "refuse" });
+            }
+            return btns;
+        }
+
+        cfg.cellclick = function (act, d) {
+            switch (act) {
+                case "accept":
+                    doAccept(d.id);
+                    break;
+                case "refuse":
+                    doRefuse(d.id);
+                    break;
+            }
+        };
+
+        var g = x.grid.init(cfg);
+
+        function doRefuse(id) {
+            x.input("请输入拒绝原因", function (r) {
+                x.doapi("mgr.cash.refuse", { deposit_id: id, reason: r }, function (d) {
+                    if (!d.issucc) return;
+                    g.getlist();
+                })
+            }, 2, true);
+        }
+        function doAccept(id) {
+            x.doapi("mgr.cash.accept", { deposit_id: id }, function (d) {
+                if (!d.issucc) return;
+                g.getlist();
+            });
+        }
+    </script>
+</body>
+</html>

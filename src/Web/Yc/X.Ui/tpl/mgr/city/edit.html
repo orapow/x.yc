@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>城市编辑 - $cfg.name</title>
+    <style type="text/css">
+        body { margin: 0; }
+        .path { display: inline-block; vertical-align: middle; }
+        .path .btn { text-decoration: none; color: #333; }
+        .path .btn, .path i { vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <x:form api="mgr.city.save">
+        <input type="hidden" name="id" value="$!item.dict_id" x-check="" />
+        <input type="hidden" name="upv" value="$!pid" x-check="" />
+        <div class="li text name " id="li_name">
+            <label class="lbe" for="id_name">路径：</label>
+            <div class="path">
+                <span class="btn btn-link">全国</span>#foreach($p in $ups)<i class="icon-angle-right"></i><span class="btn btn-link" data-val="$p.value">$p.name</span>#end
+            </div>
+        </div>
+        <x:text title="名称" name="name" size="3" def="$!item.name" />
+        <x:text title="简拼" name="jp" size="3" def="$!item.jp" />
+        <x:text title="值" name="val" size="3" def="$!item.value" />
+        <x:text title="排序" name="sort" size="3" def="#if($cid>0)$!item.sort#else 99#end" />
+        <div class="btns">
+            <button type="submit" class="btn btn-primary"><i class="icon-ok"></i>提交保存</button>
+        </div>
+    </x:form>
+    <br />
+    <br />
+    <script type="text/javascript">
+        $("form:eq(0)").xform({
+            callback: function (d, r) {
+                x.confirm("保存成功，是否继续添加？", function () {
+                    document.location.reload();
+                }, function () {
+                    parent.x.closewin();
+                });
+            }
+        });
+        $(function () {
+            $("#id_name").focus();
+            $("#id_name").keyup(function () {
+                $("#id_jp").val(x.getpy.jianpin($(this).val()).toUpperCase());
+            });
+        })
+    </script>
+</body>
+</html>

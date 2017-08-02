@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>抽奖编辑 - $cfg.name</title>
+    <style type="text/css">
+        .li { margin-bottom: 15px; }
+        .row .li { margin-bottom: 0px; }
+        .row.tj, #li_tj { display: none; }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <x:form api="mgr.lottery.save">
+            <input type="hidden" name="id" value="$!item.lottery_id" x-check="" />
+            <div class="tab" style="display:block;">
+                <x:text title="标题" def="$!item.topic" name="topic" size="5" chk="no" />
+                <x:row>
+                    <x:text title="开奖金额" tip="小于1为百分比，大于1为固定值" def="$!item.sum" name="sum" size="1" chk="no|t:nd" />
+                    <span class="" style="font-size:12px;font-weight:bold;color:red">奖池金额：￥$cfg.pool_lott元</span>
+                </x:row>
+                <x:pick title="开奖类型" name="tp" src="loc:即时开奖|条件开奖" mode="2" callback="tpselected" def="$!item.runtp" />
+                <x:pick title="开奖条件" name="tj" src="loc:时间|订单数|订单额" mode="2" count="0" callback="tjselected" def="$!tj" />
+                <x:row css="tj" title="条件设置">
+                    <x:text title="每隔 天" tip="时间" def="$!hc" name="hc" size="1" />
+                    <x:text title="订单满 笔" tip="订单数" def="$!oc" name="oc" size="1" />
+                    <x:text title="订单满 元" tip="订单额" def="$!ac" name="ac" size="1" />
+                </x:row>
+                <x:text tp="3" title="开奖规则" name="desc" size="5" def="$!item.remark" />
+            </div>
+            <div class="btns">
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-ok"></i>提交保存
+                </button>
+            </div>
+        </x:form>
+    </div>
+    <br />
+    <br />
+    <script type="text/javascript">
+
+        $(function () {
+            $("form:eq(0)").xform({
+                callback: function (d) { x.closewin(); }
+            });
+            tpselected("$!item.runtp");
+            tjselected("$!tj");
+        });
+
+        function tpselected(v) {
+            $("#li_tj")[v == 1 ? "hide" : "show"]();
+            $(".row.tj")[v == 1 ? "hide" : "show"]();
+            if (v == 2) tjselected("");
+        }
+
+        function tjselected(v) {
+            $("#li_hc")[v.indexOf("[1]") >= 0 ? "show" : "hide"]();
+            $("#li_oc")[v.indexOf("[2]") >= 0 ? "show" : "hide"]();
+            $("#li_ac")[v.indexOf("[3]") >= 0 ? "show" : "hide"]();
+            $(".row.tj")[v.length > 0 ? "show" : "hide"]();
+            console.log(v);
+        }
+
+    </script>
+</body>
+</html>

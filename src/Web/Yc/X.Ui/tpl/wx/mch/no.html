@@ -1,0 +1,26 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商户中心</title>
+    <style type="text/css">
+        .ger { text-align: center; border: none; margin: 0; }
+    </style>
+</head>
+<body style="background:#f4f4f4;">
+    <div class="guanli">
+        <div class="ger">
+            <img src="$!cu.headimg" onerror="this.src='/img/wx/gh.png'" style="display:block;float:none;margin:0 auto;" />
+            <h2>#if($cu.name.length==0)$cu.nickname#else$cu.name#end</h2>
+            <div class="clear"></div>
+        </div>
+        <div class="no">
+            <p style="font-size:1.5em;text-align:center; padding:30px 0;">
+                提示：您还不是商户，欢迎加入
+            </p>
+            <a class="btn" style="text-align:center;margin:0;" href="reg.html">立即加入</a>
+        </div>
+    </div>
+    #parse("wx/_foot.html")
+</body>
+</html>

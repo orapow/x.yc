@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>地址编辑</title>
+    <style type="text/css">
+        .txt08 { width: 100%; margin-top: 0; margin-bottom: 20px; }
+        .xiug01 select { display: inline-block; width: 23.3%; margin: 10px 0; float: none; }
+    </style>
+</head>
+<body style="background:#f4f4f4;">
+    <div class="top"><a href="/wx/addr/list.html"></a><h2>地址编辑</h2></div>
+    <!--内容-->
+    <div class="xiug">
+        <div class="xiug01">
+            <span>联系人：</span><input type="text" class="txt07" name="name" value="#if($id>0)$!ent.name#else$cu.name#end" />
+            <div class="clear"></div>
+        </div>
+        <div class="xiug01">
+            <span>联系方式：</span><input type="tel" class="txt07" name="tel" value="#if($id>0)$!ent.tel#else$cu.tel#end" />
+            <div class="clear"></div>
+        </div>
+        <div class="xiug01">
+            <span>区域：</span>
+            <select name="ct_p" class="select03 p" onchange="loadcity(this.value,'c')"></select>
+            <select name="ct_c" class="select03 c" onchange="loadcity(this.value,'x')"></select>
+            <select name="ct_x" class="select03 x" onchange="loadcity(this.value,'s')"></select>
+            <div class="clear"></div>
+        </div>
+        <div class="xiug01 st" style="display:none;">
+            <span>街道：</span>
+            <select name="ct_s" class="select03 s" style="width:40%;"></select>
+            <div class="clear"></div>
+        </div>
+        <div class="xiug01" style="border:none;">
+            <span style="line-height:32px;margin-top: 10px;">详细地址：</span><textarea class="txt08" name="addr">$!ent.addr</textarea>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="qr" onclick="dosave()"><a href="javascript:;" style="color:white;">保存地址</a></div>
+    <br />
+    <br />
+    <br />
+    <br />
+    #parse("wx/_foot.html")
+    <script type="text/javascript">
+
+        function loadcity(up, p) {
+            var items = $(".select03." + p);
+            items.empty();
+            if (up == "" && p != "p") { return; }
+            doapi("wx.addr.loadct", { up: up }, function (d) {
+                if (!d.issucc) { alert("区域加载错误"); return; }
+                if (d.items.length > 0) items.html("<option value=''>请选择</option>");
+                for (var i in d.items) {
+                    var ct = d.items[i];
+                    items.append('<option value="' + ct.value + '" ' + (ct.name == "$ent.zhen" ? "selected='selected'" : "") + '>' + ct.name + '</option>');
+                }
+                if (p == "s" && d.items.length > 0) $(".xiug01.st").show();
+                else $(".xiug01.st").hide();
+            }, false);
+        }
+
+        function dosave() {
+            var d = {
+                p: $("[name='ct_p']").val() || "",
+                c: $("[name='ct_c']").val() || "",
+                x: $("[name='ct_x']").val() || "",
+                s: $("[name='ct_s']").val() || "",
+                name: $("[name='name']").val() || "",
+                id: "$!id",
+                tel: $("[name='tel']").val(),
+                addr: $("[name='addr']").val() || ""
+            }
+
+            if (!d.p) { alert("请选择省/直辖市"); return; }
+            if (!d.c) { alert("请选择市/区"); return; }
+            if (!d.x) { alert("请选择区/县"); return; }
+            if ($(".select03.s option").size() > 0 && !d.s) { alert("请选择乡/镇/街道"); return; }
+            if (!d.name) { alert("请填写联系人"); return; }
+            if (!d.tel) { alert("请填写联系方式"); return; }
+            if (!d.addr) { alert("请填写详细地址"); return; }
+            doapi("wx.addr.save", d, function (d) {
+                if ("$!sel") document.location.href = "/wx/user/cart-" + d.msg + ".html";
+                else document.location.href = "/wx/addr/list.html";
+            });
+        }
+        loadcity(0, "p");
+    </script>
+</body>
+</html>

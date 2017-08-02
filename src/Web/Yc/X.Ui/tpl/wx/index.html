@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>首页 $cfg.name</title>
+    <style type="text/css">
+        body, .bg { overflow: hidden; }
+        .fudong { display: initial; }
+    </style>
+</head>
+<body>
+    <div class="bg" onclick="document.location.href='/wx/goods/list.html'">
+        <a href="/wx/goods/list.html" class="biao"></a>
+    </div>
+    #parse("wx/_foot.html")
+    <script>
+        $(function () {
+            var h = document.documentElement.clientHeight
+            $(".bg").height(h);
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商户中心</title>
+    <style type="text/css">
+        .fudong02 li { position: relative; }
+        ul li a { display: block; height: 40px; padding: 0 10px; border-radius: 0; }
+        .fudong { display: initial; }
+    </style>
+</head>
+<body style="background:#faf9f9;">
+    <div class="ger">
+        <img src="$!cu.headimg" onerror="this.src='/img/wx/gh.png'" />
+        <h2>$cu.name(商户)</h2>
+        <h2>$cu.tel</h2>
+        <a href="javascript:;" style="color: red;font-size: 16px;right: 20px;">积分：$cu.exp</a>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="liebiao01" style="margin-top:10px;">
+        <ul>
+            <li class="dizhi02"><a href="/wx/arti/detail-1.html"> <p>进货记录</p><img src="/img/wx/tj_13.png" /></a></li>
+            <li class="dizhi01"><a href="/wx/arti/detail-1.html"> <p>积分兑换</p><img src="/img/wx/tj_13.png" /></a></li>
+            <li class="dizhi03"><a href="/wx/addr/list.html"> <p>收货地址</p><img src="/img/wx/tj_13.png" /></a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="liebiao01" style="margin-bottom:30px">
+        <ul>
+            <li class="dizhi05"><a href="tel:$cfg.stel"> <p>联系客服</p><span style="color:#f57629;">$cfg.stel</span></a></li>
+        </ul>
+    </div>
+    <div class="qrcode" style="text-align:center;font-size:16px;">
+        <img src="http://upload.qudong.com/2014/0417/1397706506388.gif" />
+        <p style="margin-top:10px;">邀请码：7X33IP</p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    #parse("wx/_foot.html")
+    <script>
+        $(function () {
+            var h = document.documentElement.clientHeight
+            $(".bg").height(h);
+        })
+    </script>
+    </div>
+</body>
+</html>

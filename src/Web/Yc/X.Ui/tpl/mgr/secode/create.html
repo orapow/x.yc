@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>用户信息 - $cfg.name</title>
+    <style type="text/css">
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+    <x:form api="mgr.secode.create">
+        <x:text title="批次" name="batch" size="3" def="$!batch" />
+        <x:text title="数量" name="count" size="3" def="10000" />
+        <div class="btns">
+            <button type="submit" class="btn btn-primary"><i class="icon-ok"></i>提交保存</button>
+        </div>
+    </x:form>
+    <br />
+    <br />
+    <script type="text/javascript">
+        $("form:eq(0)").xform({
+            callback: function (d) { x.closewin(); }
+        });
+    </script>
+</body>
+</html>

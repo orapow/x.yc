@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>抽奖编辑 - $cfg.name</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        .li { margin-bottom: 15px; }
+        .row .li { margin-bottom: 0px; }
+        .row.tj, #li_tj { display: none; }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <x:form api="mgr.lottery.items.save">
+            <input type="hidden" name="id" value="$!item.lottery_item_id" x-check="" />
+            <input type="hidden" name="lot_id" value="$!lt_id" x-check="" />
+            <div class="tab" style="display:block;">
+                <x:text title="名称" def="$!item.name" name="name" size="5" chk="no" />
+                <x:pick title="类型" name="type" src="loc:积分|实物" mode="2" def="$!item.type" chk="no" />
+                <x:text title="份数" def="$!item.count" name="count" size="1" chk="no|t:num" />
+                <x:text title="价值" tip="小于1为百分比，大于1为固定值" def="$!item.price" name="price" size="1" chk="no|t:nd" />
+                <x:upload name="pic" title="图片" count="1" tp="img" def="$!item.pic" />
+                <x:text title="说明" name="desc" tp="3" size="5" def="$!item.remark" />
+            </div>
+            <div class="btns">
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-ok"></i>提交保存
+                </button>
+                <a href="list-${lt_id}.html" class="btn"><i class="icon-reply"></i>返回上一页</a>
+            </div>
+        </x:form>
+    </div>
+    <br />
+    <br />
+    <script type="text/javascript">
+
+        $(function () {
+            $("form:eq(0)").xform({
+                callback: function (d) { document.location.href = "list-$!{lt_id}.html" }
+            });
+            tpselected("$!item.runtp");
+            tjselected("$!tj");
+        });
+
+        function tpselected(v) {
+            $("#li_tj")[v == 1 ? "hide" : "show"]();
+            $(".row.tj")[v == 1 ? "hide" : "show"]();
+            if (v == 2) tjselected("");
+        }
+
+        function tjselected(v) {
+            $("#li_hc")[v.indexOf("[1]") >= 0 ? "show" : "hide"]();
+            $("#li_oc")[v.indexOf("[2]") >= 0 ? "show" : "hide"]();
+            $("#li_ac")[v.indexOf("[3]") >= 0 ? "show" : "hide"]();
+            $(".row.tj")[v.length > 0 ? "show" : "hide"]();
+            console.log(v);
+        }
+
+    </script>
+</body>
+</html>

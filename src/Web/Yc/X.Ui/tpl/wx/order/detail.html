@@ -1,0 +1,156 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>订单详情</title>
+    <style type="text/css">
+        .goods_info li div:first-child span { height: auto; }
+        .lc { margin: 0 auto; width: 90%; }
+        .st { width: 30px; background: url(/img/wx/fgf_06.png) top center no-repeat; background-size: 18px; position: absolute; top: 35px; left: 0; margin-left: -15px; }
+        .st.on { background-image: url(/img/wx/fgf_03.png); top: 30px; left: 0; background-size: 30px; }
+        .st.on span { margin-top: 25px; }
+        .lc01 { width: 0px; }
+        .lc01.s12 { width: 33%; }
+        .lc01.s13 { width: 66%; }
+        .lc01.s14 { width: 99%; }
+        .lc01.s23 { width: 33.33%; }
+        .lc01.s24 { width: 66.67%; }
+        .lc01.s25 { width: 100%; }
+        .goods_info .hd span:first-child { width: 63%; }
+        .goods_info li div:first-child { width: 63%; }
+        .goods_info li div:nth-child(2) { line-height: 50px; }
+        .goods_info li div:last-child { line-height: 50px; }
+        .fudong { display: none; }
+        .xiangx span { margin-right: 0; }
+    </style>
+</head>
+<body style="background:#f4f4f4;">
+    <div class="top"><a href="javascript:history.go(-1);"></a><h2>订单详情</h2></div>
+    <div class="clear"></div>
+    <div class="min">
+        <div class="lchen">
+            <h2>订单号：$od.no<!--<span>$od.ctime.tostring("yyyy-MM-dd HH:mm:ss")</span>--></h2>
+            #if($od.iscancel==true)
+            <p style="font-size: 14px;padding-top: 10px;">订单已经取消</p>
+            #elseif($od.isrefund)
+            <p style="font-size: 14px;padding-top: 10px;">订单退款中</p>
+            #else
+            <div class="lc">
+                <div class="lc01 s${od.pay_way}$od.status"></div>
+                <div class="st #if($od.status>=1)on#end"> <span>下单</span> </div>
+                <div class="st #if($od.status>=2)on#end" style="left:33.33%"> <span>支付</span></div>
+                <div class="st #if($od.status>=3)on#end" style="left:66.66%"> <span>发货</span> </div>
+                <div class="st #if($od.status>=4)on#end" style="left:100%"> <span>签收</span> </div>
+            </div>
+            #end
+        </div>
+        <div class="xiangx">
+            <p><span>收货地址：</span>$od.rec_addr</p>
+            <p><span>联系人：</span>$od.rec_man</p>
+            <p><span>联系电话：</span>$od.rec_tel</p>
+            <div class="clear"></div>
+        </div>
+        #if($od.send_time)
+        <div class="xiangx">
+            <p><span>发货时间：</span>$od.send_time.Tostring("yyyy-MM-dd HH:mm:ss")</p>
+            <p><span>承运快递：</span>$od.send_ec</p>
+            <p><span>快递单号：</span>$od.send_en</p>
+            <div class="clear"></div>
+        </div>
+        #end
+        <div class="xiangx">
+            <p><span>支付方式：</span>#if($od.pay_way==1)微信支付#elseif($od.pay_way==2)货到付款#elseif($od.pay_way==3)余额支付#end</p>
+            <p><span>是否付款：</span>#if($od.pay_amount>0)已付款#else未付款#end</p>
+            #if($od.pay_amount>0)
+            <p><span>付款金额：</span>$od.pay_amount</p>
+            <p><span>付款时间：</span>$!od.pay_time.tostring("yyyy-MM-dd HH:mm:ss")</p>
+            #end
+            #if($od.out_time)<p><span>发货时间：</span>$od.out_time.tostring("yyyy-MM-dd HH:mm:ss")</p>#end
+            <div class="clear"></div>
+        </div>
+        #if($od.isrefund==true)
+        <div class="xiangx">
+            <p><span>申请时间：</span>$rd.ctime.Tostring("yyyy-MM-dd HH:mm:ss")</p>
+            <p><span>退款原因：</span>$!rd.reason</p>
+            <p><span>退款金额：</span>$rd.amount</p>
+            <p><span>已退金额：</span>$!rd.ramount</p>
+            <p>
+                <span>退款状态：</span>
+                #if($rd.status==1)审核中
+                #elseif($rd.status==2)退款成功
+                #elseif($rd.status==3)退款失败
+                #end
+            </p>
+            <p><span>备注：</span>$!rd.remark</p>
+            <div class="clear"></div>
+        </div>
+        #end
+        <div class="goods_info">
+            <div class="hd"><span>商品信息</span><span>数量</span><span>金额</span></div>
+            <ul>
+                #foreach($g in $od.x_order_detail)
+                <li id="product_10836">
+                    <div>
+                        <span class="pic"><img src="$g.cover" /></span>
+                        <p style="margin-left:70px;">$g.name</p>
+                    </div>
+                    <div>$g.count</div>
+                    <div>￥$g.total_price</div>
+                </li>
+                #end
+            </ul>
+        </div>
+        <div class="xiangx">
+            <p><span>订单备注：</span>$od.user_remark</p>
+            <div class="clear"></div>
+        </div>
+        <div class="xiaox01">
+            <p>累计货款：<span>$od.amount元</span></p>
+            <!--<p>搬运费：<span>+$od.freight_amount元</span></p>-->
+            <p>运费：<span>+$od.freight_amount元</span></p>
+            <p>优惠金额：<span>-$od.fav_amount元</span></p>
+            <hr style="background: #ccc;height: 1px;border: none;" />
+            <p>应付金额：<span>￥$od.yf_amount元</span></p>
+        </div>
+    </div>
+    #if($od.iscancel!=true&&$od.isrefund!=true&&($od.status==1||$od.status==3))
+    <div class="fuchen">
+        <h2>金额：$od.yf_amount元</h2>
+        #if($od.status==1)<input type="button" value="确认付款" class="but" onclick="dopay()" />#end
+        #if($od.status==3)<input type="button" value="确认收货" class="but" onclick="doaccept()" />#end
+    </div>
+    #end
+    <script type="text/javascript">
+
+        function dopay() {
+            doapi("wx.order.pay", { id: "$od.order_id", pay_way: "$od.pay_way" }, function (d) {
+                if (!d.issucc) return;
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest',
+                    {
+                        "appId": "$cfg.wx_appid",//公众号名称，由商户传入
+                        "timeStamp": d.ts,//时间戳，自1970年以来的秒数
+                        "nonceStr": d.ns, //随机串
+                        "package": d.pkg,
+                        "signType": "MD5",//微信签名方式：
+                        "paySign": d.sign //微信签名
+                    },
+                    function (res) {
+                        hideloading();
+                        alert(JSON.stringify(res));
+                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                            //if ("$!burl") document.location.href = "$!burl";
+                            //else history.back();
+                            document.location.href = "/wx/order/succ-" + d.id + ".html";
+                        } else {
+                            //$("#img_code").attr("src", "data:image/jpeg;base64," + d.msg).parent().show();
+                            alert("支付失败，请重试！！！");
+                        }
+                    });
+            });
+        }
+    </script>
+    #parse("wx/_foot.html")
+</body>
+</html>

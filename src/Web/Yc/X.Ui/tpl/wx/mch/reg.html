@@ -1,0 +1,95 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商户认证</title>
+    <style type="text/css">
+        .area select { display: inline-block; width: 27.3%; margin: 0; float: none; }
+    </style>
+</head>
+<body style="background:#f4f4f4;">
+    <input type="file" onchange="do_upload(this)" id="up_file" style="display:none;" />
+    <div class="guanli">
+        <ul>
+            <li class="area">
+                区域：<select name="ct_p" class="select03 p" onchange="loadcity(this.value,'c')"></select>
+                <select name="ct_c" class="select03 c" onchange="loadcity(this.value,'x')"></select>
+                <select name="ct_x" class="select03 x"></select>
+            </li>
+            <li>姓名：<input type="text" id="cn" value="$!cu.name" /></li>
+            <li>
+                <a href="#">手持身份证</a>
+                <div class="shang" style="text-align:center;padding-bottom:10px;">
+                    <img src="/img/wx/card.jpg" id="cp_card" style="width:100%;" onclick="$('#up_file').attr('data-id','card').click();" />
+                    <div class="clear"></div>
+                </div>
+            </li>
+            <li>
+                <a href="#">营业执照</a>
+                <div class="shang" style="text-align:center;padding-bottom:10px;">
+                    <img src="/img/wx/cert.jpg" id="cp_cert" style="width:100%;" onclick="$('#up_file').attr('data-id', 'cert').click();" />
+                    <div class="clear"></div>
+                </div>
+            </li>
+        </ul>
+        <div class="qr" style="padding:0;margin:10px 0;"><a href="javascript:;" onclick="do_save();" class="btn">提交审核</a></div>
+    </div>
+    <br />
+    <br />
+    <br />
+    #parse("wx/_foot.html")
+    <script type="text/javascript">
+
+        function loadcity(up, p) {
+            var items = $(".select03." + p);
+            items.empty();
+            if (up == "" && p != "p") { return; }
+            doapi("wx.addr.loadct", { up: up }, function (d) {
+                if (!d.issucc) { alert("区域加载错误"); return; }
+                if (d.items.length > 0) items.html("<option value=''>请选择</option>");
+                for (var i in d.items) {
+                    var ct = d.items[i];
+                    items.append('<option value="' + ct.value + '" ' + (ct.name == "$ent.zhen" ? "selected='selected'" : "") + '>' + ct.name + '</option>');
+                }
+                if (p == "s" && d.items.length > 0) $(".xiug01.st").show();
+                else $(".xiug01.st").hide();
+            }, false);
+        }
+
+        loadcity(0, "p");
+
+        function do_upload(ipt) {
+            var f = ipt.files[0];
+            var form = new FormData();
+            form.append("type", "img");
+            form.append("file", f);// 文件对象
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState != 4 || this.status != 200) return;
+                var j = jQuery.parseJSON(this.responseText);
+                if (!j.issucc) return;
+                $("#cp_" + $(ipt).attr("data-id")).attr("src", j.url);
+            }
+            xhr.open("post", "/api/com.upload", true);
+            xhr.send(form);
+        }
+
+        function do_save() {
+            var d = {
+                area: $("[value='" + $(".select03.p").val() + "']").text() + " " + $("[value='" + $(".select03.c").val() + "']").text() + " " + $("[value='" + $(".select03.x").val() + "']").text(),
+                name: $("#cn").val(),
+                card: $("#cp_card").attr("src"),
+                cert: $("#cp_cert").attr("src")
+            }
+            if (!d.area) { alert("请选择地区"); return; }
+            if (!d.name) { alert("请输入姓名"); return; }
+            if (!d.card) { alert("请上传手持身份证照"); return; }
+            if (!d.cert) { alert("请上传营业执照"); return; }
+            doapi("wx.mch.reg", d, function (d) {
+                if (!d.issucc) return;
+                document.location.href = "/wx/mch/audit.html";
+            })
+        }
+    </script>
+</body>
+</html>

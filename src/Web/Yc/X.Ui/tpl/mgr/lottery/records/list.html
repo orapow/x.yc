@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>抽奖管理 - $cfg.name</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        .table td { height: 30px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="search">
+        <x:form>
+            <x:text name="key" tip="标题" size="4" />
+            <button type="submit" class="btn btn-primary"><i class="icon-search"></i>搜索</button>
+            <button type="reset" class="btn"><i class="icon-remove"></i>清除</button>
+        </x:form>
+    </div>
+    <div class="gridpanel">
+    </div>
+    <script type="text/javascript">
+        $("form:eq(0)").xform({
+            callback: function (d) {
+                d.page = 1;
+                g.getlist(d);
+            }
+        })
+
+        var cfg = {
+            el: ".gridpanel",
+            searchcon: { page: 1, limit: 30, lot_id: "$!lt_id" },
+            api: "mgr.lottery.records.list",
+            fs: [
+                { t: "标题", f: "{title}", w: 160, align: "left" },
+                { t: "本次金额", f: "{sum}", w: 60, align: "center" },
+                { t: "开奖条件", f: "{open}", w: 100, align: "center" },
+                { t: "开奖时间", f: "{ctime}", w: 80, align: "center" },
+            ],
+            btns: [
+                { txt: "删除", ico: "remove", act: "del" }
+            ]
+        };
+
+        //(初始:1,通过:2,不通过:3)
+        cfg.cellclick = function (act, d) {
+            switch (act) {
+                case "del":
+                    do_del(d.id);
+                    break;
+                default:
+                    x.alert("动作" + act + "未定义");
+                    break;
+            }
+        };
+        var g = x.grid.init(cfg);
+
+        function do_del(id) {
+            x.doapi("mgr.lottery.records.del", { id: id }, function () {
+                g.getlist();
+            });
+        }
+
+    </script>
+</body>
+</html>

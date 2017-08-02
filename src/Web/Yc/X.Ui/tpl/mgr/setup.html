@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>设置面板 - $cfg.name</title>
+    <style type="text/css">
+        .tab { border-bottom: 1px solid #3086c8; width: 650px; }
+        .tab span.t { width: 90px; display: inline-block; line-height: 32px; text-align: center; margin-right: -1px; cursor: pointer; }
+        span.t.on { background-color: #3086c8; color: white; border-color: #3086c8; }
+        .tb { display: none; margin-top: 10px; }
+        .li { margin-bottom: 10px; }
+        .row .li { margin-bottom: 0; }
+        .x-form .row { margin-bottom: 10px; }
+        hr { margin: 10px; }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <span class="main">设置面板</span> - <span class="sub">系统配置</span>
+    </div>
+    <div class="form">
+        <x:form api="mgr.setup">
+            <div class="tab">
+                <span class="t">基本设置</span><span class="t">分销设置</span><span class="t">运营设置</span><span class="t">微信设置</span>
+            </div>
+            <div class="tb">
+                <x:text title="网站名" name="name" def="$!cfg.name" size="2" />
+                <x:text title="服务电话" name="stel" def="$!cfg.stel" size="4" />
+                <x:text title="域名" name="domain" def="$!cfg.domain" size="3" />
+            </div>
+            <div class="tb">
+                <x:row title="第一级">
+                    <x:text title="提 %" name="l0" def="$!cfg.lv_cent.get_item(0)" size="1" />
+                </x:row>
+                <x:row title="第二级">
+                    <x:text title="提 %" name="l1" def="$!cfg.lv_cent.get_item(1)" size="1" />
+                </x:row>
+                <x:row title="第三级">
+                    <x:text title="提 %" name="l2" def="$!cfg.lv_cent.get_item(2)" size="1" />
+                </x:row>
+                <x:row title="第四级">
+                    <x:text title="提 %" name="l3" def="$!cfg.lv_cent.get_item(3)" size="1" />
+                </x:row>
+                <x:row title="第五级">
+                    <x:text title="提 %" name="l4" def="$!cfg.lv_cent.get_item(4)" size="1" />
+                </x:row>
+                <x:row title="第六级">
+                    <x:text title="提 %" name="l5" def="$!cfg.lv_cent.get_item(5)" size="1" />
+                </x:row>
+                <x:row title="第七级">
+                    <x:text title="提 %" name="l6" def="$!cfg.lv_cent.get_item(6)" size="1" />
+                </x:row>
+                <x:row title="第八级">
+                    <x:text title="提 %" name="l7" def="$!cfg.lv_cent.get_item(7)" size="1" />
+                </x:row>
+                <x:row title="第九级">
+                    <x:text title="提 %" name="l8" def="$!cfg.lv_cent.get_item(8)" size="1" />
+                </x:row>
+                <x:row title="第十级">
+                    <x:text title="提 %" name="l9" def="$!cfg.lv_cent.get_item(9)" size="1" />
+                </x:row>
+            </div>
+            <div class="tb">
+                <x:row title="积分设置">
+                    <x:text title="1积分= 元" name="credit" def="$!cfg.credit" size="1" />
+                </x:row>
+                <hr />
+                <x:row title="运费设置">
+                    <x:text title="包邮￥ 元" name="free_ship" def="$!cfg.free_ship" size="1" />
+                    <div style="margin-top:10px;"></div>
+                    <x:text title="每单￥ 元" name="shipfee" def="$!cfg.shipfee" size="1" />
+                </x:row>
+                <hr />
+                <x:row title="退货设置">
+                    <x:text title="小于 天" name="refdays" def="$!cfg.refdays" size="1" />
+                </x:row>
+                <hr />
+                <x:pick title="提现审核" name="cash_audit" src="loc:开启|关闭|停止" mode="2" def="$!cfg.cash_audit" />
+                <x:row title="提现额度">
+                    <x:text title="最少￥ 元" tip="最少" name="min_cash" def="$!cfg.cash_min" size="1" />
+                    <div style="margin-top:10px;"></div>
+                    <x:text title="最多￥ 元" tip="最多" name="max_cash" def="$!cfg.cash_max" size="1" />
+                </x:row>
+                <hr />
+                <x:row title="奖池提取">
+                    <x:text title="营业额 %" name="brate" def="$!cfg.brate" size="1" />
+                </x:row>
+                <hr />
+                <x:row title="基金提取">
+                    <x:text title="营业额 %" name="mrate" def="$!cfg.mrate" size="1" />
+                </x:row>
+            </div>
+            <div class="tb">
+                <x:text title="appid" name="wx_appid" def="$!cfg.wx_appid" size="4" />
+                <x:text title="appsecret" name="wx_scr" def="$!cfg.wx_scr" size="5" />
+                <x:text title="商户号" name="wx_mch_id" def="$!cfg.wx_mch_id" size="2" />
+                <hr />
+                <x:text title="支付密钥" name="wx_paykey" def="$!cfg.wx_paykey" size="5" />
+                <x:text title="证书路径" name="wx_certpath" def="$!cfg.wx_certpath" size="5" />
+            </div>
+            <div class="btns">
+                <button type="submit" class="btn btn-primary"><i class="icon-ok"></i>提交保存</button>
+            </div>
+        </x:form>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("form:eq(0)").xform({
+                callback: function () { x.alert("修改成功"); }
+            });
+            $("span.t").click(function () {
+                $(".tb").hide();
+                $(".tb:eq(" + $(this).index() + ")").show();
+                $("span.t").removeClass("on");
+                $(this).addClass("on");
+            });
+            $("span.t:eq($!tb)").click();
+        });
+
+    </script>
+</body>
+</html>

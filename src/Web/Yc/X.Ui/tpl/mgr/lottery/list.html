@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>抽奖管理 - $cfg.name</title>
+    <style type="text/css">
+        .table td { height: 30px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <span class="main">抽奖列表</span> - <span class="sub">抽奖管理</span>
+    </div>
+    <div class="search">
+        <x:form>
+            <x:text name="key" tip="标题" size="4" />
+            <button type="submit" class="btn btn-primary"><i class="icon-search"></i>搜索</button>
+            <button type="reset" class="btn"><i class="icon-remove"></i>清除</button>
+            <div class="btns">
+                <a class="btn btn-primary" id="btn_add" href="javascript:;" onclick="show_edit();"><i class="icon-plus"></i>新增抽奖</a>
+            </div>
+        </x:form>
+    </div>
+    <div class="gridpanel">
+    </div>
+    <script type="text/javascript">
+        $("form:eq(0)").xform({
+            callback: function (d) {
+                d.page = 1;
+                g.getlist(d);
+            }
+        })
+
+        var cfg = {
+            el: ".gridpanel",
+            searchcon: { page: 1, limit: 30 },
+            api: "mgr.lottery.list",
+            fs: [
+                { t: "标题", f: "{topic}", w: 220, align: "left" },
+                { t: "开奖条件", f: "{tp}", w: 100, align: "left" },
+                { t: "开奖金额", f: "{sum}", w: 60, align: "center" },
+                { t: "抽奖规则", f: "{remark}", w: 220, align: "left" },
+                { t: "创建时间", f: "{ctime}", w: 100, align: "center" },
+                { t: "最后开奖", f: "{ltime}", w: 110, align: "center" },
+                { t: "状态", f: "{status}", w: 60, align: "center" },
+            ],
+            btns: [
+                { txt: "修改", ico: "edit", act: "edit", confirm: false },
+                { txt: "删除", ico: "remove", act: "del" },
+                { txt: "奖项", ico: "gift", act: "items", confirm: false },
+                { txt: "记录", ico: "trophy", act: "reco", confirm: false },
+            ]
+        };
+
+        //(初始:1,通过:2,不通过:3)
+        cfg.cellclick = function (act, d) {
+            switch (act) {
+                case "del":
+                    do_user_del(d.id);
+                    break;
+                case "edit":
+                    show_edit(d.id);
+                    break;
+                case "items":
+                    show_items(d.id);
+                    break;
+                case "reco":
+                    show_records(d.id);
+                    break;
+                default:
+                    x.alert("动作" + act + "未定义");
+                    break;
+            }
+        };
+        var g = x.grid.init(cfg);
+
+        function show_edit(id) {
+            x.openwin("edit-" + (id || "") + ".html", "抽奖信息编辑", function () {
+                g.getlist();
+            }, { w: 600, h: 400 });
+        }
+        function show_items(id) {
+            x.openwin("items/list-" + (id || "") + ".html", "奖项管理", null, { w: 800, h: 400 });
+        }
+        function show_records(id) {
+            x.openwin("records/list-" + (id || "") + ".html", "查看开奖记录", null, { w: 600, h: 400 });
+        }
+
+        function do_user_del(id) {
+            x.doapi("mgr.lottery.del", { id: id }, function () {
+                g.getlist();
+            });
+        }
+
+    </script>
+</body>
+</html>

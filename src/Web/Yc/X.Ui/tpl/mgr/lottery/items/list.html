@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>奖项设置 - $cfg.name</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        .table td { height: 30px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="search">
+        <x:form>
+            <x:text name="key" tip="名称" size="4" />
+            <button type="submit" class="btn btn-primary"><i class="icon-search"></i>搜索</button>
+            <button type="reset" class="btn"><i class="icon-remove"></i>清除</button>
+            <div class="btns">
+                <a class="btn btn-primary" id="btn_add" href="edit--${lt_id}.html"><i class="icon-plus"></i>新增奖项</a>
+            </div>
+        </x:form>
+    </div>
+    <div class="gridpanel">
+    </div>
+    <script type="text/javascript">
+
+        $("form:eq(0)").xform({
+            callback: function (d) {
+                d.page = 1;
+                g.getlist(d);
+            }
+        })
+
+        var cfg = {
+            el: ".gridpanel",
+            searchcon: { page: 1, limit: 30, lot_id: "$!lt_id" },
+            api: "mgr.lottery.items.list",
+            fs: [
+                { t: "名称", f: "<img src='{pic}'/>{name}", w: 120, align: "left" },
+                { t: "类型", f: "{type}", w: 40, align: "center" },
+                { t: "份数", f: "{count}", w: 40, align: "center" },
+                { t: "价值", f: "{price}", w: 60, align: "center" },
+                { t: "说明", f: "{remark}", w: 220, align: "center" },
+            ],
+            btns: [
+                { txt: "修改", ico: "edit", link: "edit-{id}-$!{lt_id}.html", confirm: false },
+                { txt: "删除", ico: "remove", act: "del" }
+            ]
+        };
+
+        //(初始:1,通过:2,不通过:3)
+        cfg.cellclick = function (act, d) {
+            switch (act) {
+                case "del":
+                    do_user_del(d.id);
+                    break;
+                case "edit":
+                    show_edit(d.id);
+                    break;
+                default:
+                    x.alert("动作" + act + "未定义");
+                    break;
+            }
+        };
+        var g = x.grid.init(cfg);
+
+        //function show_edit(id) {
+        //    x.openwin("edit-" + (id || "") + ".html", "抽奖信息编辑", function () {
+        //        g.getlist();
+        //    }, { w: 600, h: 400 });
+        //}
+
+        function do_user_del(id) {
+            x.doapi("mgr.lottery.items.del", { id: id }, function () {
+                g.getlist();
+            });
+        }
+
+    </script>
+</body>
+</html>

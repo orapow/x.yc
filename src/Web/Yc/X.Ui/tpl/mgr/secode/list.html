@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>商品防伪 - $cfg.name</title>
+</head>
+<body>
+    <div class="title">
+        <span class="main">商品防伪</span> - <span class="sub">商品管理</span>
+    </div>
+    <div class="search">
+        <x:form>
+            <x:text name="bat" tip="批次" size="2" /><x:text name="key" tip="外码" size="4" />
+            <button type="submit" class="btn btn-primary"><i class="icon-search"></i>搜索</button>
+            <button type="reset" class="btn"><i class="icon-remove"></i>清除</button>
+            <div class="btns">
+                <span class="btn btn-primary" id="btn_add" onclick="x.openwin('create.html', '生成防伪码', function () { g.getlist();}, { w: 400, h: 300 });"><i class="icon-plus"></i>生成防伪码</span> <span class="btn" onclick="do_delbatch();"><i class="icon-remove"></i> 删除当前批次</span> <span class="btn" onclick="do_export();"><i class="icon-signin"></i> 导出当前批次</span>
+            </div>
+        </x:form>
+    </div>
+    <div class="gridpanel">
+    </div>
+    <div style="display:none">
+        <iframe id="fr_down"></iframe>
+    </div>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $("form:eq(0)").xform({
+                callback: function (d) {
+                    d.page = 1;
+                    g.getlist(d);
+                }
+            })
+        });
+
+        var cfg = {
+            el: ".gridpanel",
+            searchcon: { page: 1, limit: 30, tp: "$tp", st: "$!st" },
+            api: "mgr.secode.list",
+            fs: [
+                { t: "批次", f: "{batch}", w: 60, align: "center" },
+                { t: "序号", f: "{icode}", w: 80, align: "center" },
+                { t: "外码", f: "{ocode}", w: 220, align: "center" },
+                { t: "用户", f: "{user}", w: 100, align: "center" },
+                { t: "验证时间", f: "{stime}", w: 100, align: "center" }
+            ],
+            btns: [
+                { txt: "删除", ico: "remove", act: "del" }
+            ]
+        };
+
+        cfg.cellclick = function (act, d) {
+            switch (act) {
+                case "del":
+                    dodel(d.id);
+                    break;
+            }
+        };
+
+        var g = x.grid.init(cfg);
+
+        function dodel(id) {
+            x.doapi("mgr.secode.del", { id: id }, function () {
+                g.getlist();
+            });
+        }
+
+        function do_export() {
+            var b = $("#id_bat").val();
+            if (!b) x.alert("请在左侧输入批次");
+            else $("#fr_down").attr("src", "export-" + b + ".html?" + new Date().getTime());
+        }
+
+        function do_delbatch() {
+            var b = $("#id_bat").val();
+            if (!b) x.alert("请在左侧输入批次");
+            else {
+                x.confirm("确定要删除批次：" + b + "吗？", function () {
+                    x.doapi("mgr.secode.delbat", { bat: b }, function (d) {
+                        g.getlist();
+                    });
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>

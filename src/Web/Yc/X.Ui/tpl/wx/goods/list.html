@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>商品库</title>
+    <style type="text/css">
+        .fudong { display: initial; }
+    </style>
+</head>
+
+<body style="background:#faf9f9;">
+    <div class="chanp">
+        <ul>
+            #foreach($g in $gs)
+            <li>
+                <a href="/wx/goods/detail-${g.id}.html"><img src="$g.cover" onerror="this.src='/img/no.jpg'" /></a>
+                <div class="jiag">
+                    <p> $g.title</p>
+                    <a href="#">￥$g.price</a>
+                </div>
+                <!--<div class="tup"></div>-->
+            </li>
+            #end
+        </ul>
+        <div class="clear"></div>
+    </div>
+    #parse("wx/_foot.html")
+    <script>
+        $(function () {
+            var h = document.documentElement.clientHeight
+            $(".bg").height(h);
+        })
+    </script>
+</body>
+</html>

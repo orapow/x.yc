@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("mgr/com/_head.html")
+    <title>奖池管理 - $cfg.name</title>
+    <style type="text/css">
+        .table td { height: 30px; vertical-align: middle; }
+        .top { background-color: #3086c8; margin: 10px 0; padding: 26px; border-radius: 5px; font-size: 24px; color: white; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <span class="main">奖池管理</span> - <span class="sub">抽奖管理</span>
+    </div>
+    <div class="top">
+        奖池金额：$cfg.pool_lott.ToString("N2")
+    </div>
+    <table width="100%">
+        <tr>
+            <td valign="top">
+                <div class="left"></div>
+            </td>
+            <td valign="top">
+                <div class="right"></div>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        x.grid.init({
+            el: ".right",
+            searchcon: { page: 1, limit: 30 },
+            api: "mgr.lottery.runs",
+            fs: [
+                { t: "开奖标题", f: "{topic}", w: 200, align: "left" },
+                { t: "支出金额", f: "{sum}", w: 60, align: "center" },
+                { t: "开奖时间", f: "{ctime}", w: 100, align: "center" },
+                { t: "开奖说明", f: "{open}", w: 220, align: "left" }
+            ]
+        });
+
+        x.grid.init({
+            el: ".left",
+            searchcon: { page: 1, limit: 30 },
+            api: "mgr.lottery.logs",
+            fs: [
+                { t: "订单号", f: "{ono}", w: 120, align: "left" },
+                { t: "订单金额", f: "{oamount}", w: 60, align: "center" },
+                { t: "提取额", f: "{rate}", w: 60, align: "center" },
+                { t: "入帐金额", f: "{amount}", w: 80, align: "left" },
+                { t: "时间", f: "{ctime}", w: 220, align: "left" }
+            ]
+        });
+
+    </script>
+</body>
+</html>
