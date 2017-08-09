@@ -46,7 +46,7 @@ namespace X.App.Apis.mgr.cash
                 ctime = d.ctime?.ToString("yyyy-MM-dd HH:mm"),
                 remark = d.remark,
                 status = d.status,
-                statusDisplay = d.status == 3 ? "已拒绝" : (d.status == 2 ? "已同意" : "待审核")
+                statusname = d.status == 3 ? "已拒绝" : (d.status == 2 ? "已同意" : "待审核")
             });
             r.count = q.Count();
             return r;

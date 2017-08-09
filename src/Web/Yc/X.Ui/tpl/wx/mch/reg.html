@@ -68,7 +68,7 @@
                 if (this.readyState != 4 || this.status != 200) return;
                 var j = jQuery.parseJSON(this.responseText);
                 if (!j.issucc) return;
-                $("#cp_" + $(ipt).attr("data-id")).attr("src", j.url);
+                $("#cp_" + $(ipt).attr("data-id")).attr("src", j.url).attr("val", j.url);
             }
             xhr.open("post", "/api/com.upload", true);
             xhr.send(form);
@@ -78,8 +78,8 @@
             var d = {
                 area: $("[value='" + $(".select03.p").val() + "']").text() + " " + $("[value='" + $(".select03.c").val() + "']").text() + " " + $("[value='" + $(".select03.x").val() + "']").text(),
                 name: $("#cn").val(),
-                card: $("#cp_card").attr("src"),
-                cert: $("#cp_cert").attr("src")
+                card: $("#cp_card").attr("val"),
+                cert: $("#cp_cert").attr("val")
             }
             if (!d.area) { alert("请选择地区"); return; }
             if (!d.name) { alert("请输入姓名"); return; }

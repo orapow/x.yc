@@ -13,7 +13,7 @@
     <div class="meiy">
         <img src="$!img" />
         <p>$!msg</p>
-        <a href="$!bt_url">$!bt_txt</a>
+        #if($bt_txt.length>0)<a href="$!bt_url">$!bt_txt</a>#end
     </div>
     #parse("wx/_foot.html")
 </body>

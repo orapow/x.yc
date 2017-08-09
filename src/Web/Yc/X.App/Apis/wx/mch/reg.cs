@@ -32,12 +32,12 @@ namespace X.App.Apis.wx.mch
             }
 
             cu.audit = 1;
-            cu.type = 2;
             cu.area = area;
             cu.name = name;
             cu.card = card;
             cu.certificate = cert;
             cu.atime = DateTime.Now;
+            cu.remark = "";
 
             SubmitDBChanges();
 

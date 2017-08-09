@@ -36,7 +36,7 @@ namespace X.App.Apis.mgr.user
 
             //if (city > 0) q = q.Where(o => o.city == (mg.x_role.power == "###" ? city : mg.city));
             if (!string.IsNullOrEmpty(key)) q = q.Where(o => o.name.Contains(key) || o.tel.Contains(key) || o.nickname.Contains(key));
-            if (tp > 0) q = q.Where(o => o.type == tp);
+            if (tp == 2) q = q.Where(o => o.type == tp || o.audit > 0);
 
             var list = q.OrderByDescending(o => o.ctime).Skip((page - 1) * limit).Take(limit).ToList();
 
@@ -46,6 +46,8 @@ namespace X.App.Apis.mgr.user
                 name = string.IsNullOrEmpty(u.name) ? u.name : u.name + "(" + u.sex + ")",
                 u.tel,
                 u.nickname,
+                u.audit,
+                off = u.disable == false,
                 u.headimg,
                 exp = u.exp + (u.used_exp > 0 ? "(" + u.used_exp + ")" : ""),
                 atime = u.atime?.ToString("yyyy-MM-dd HH:mm"),

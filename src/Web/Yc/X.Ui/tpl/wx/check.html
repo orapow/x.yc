@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>查验真伪</title>
+    <style type="text/css">
+        p { margin: 10px; display: block; text-align: center; }
+        .btn { text-align: center; }
+    </style>
+</head>
+<body>
+    <p style="margin-top:30px;">
+        <img src="/img/wx/cy.png" style="width:80px;" />
+    </p>
+    <p style="font-size:16px;line-height:32px;">
+        点击"扫一扫"，扫描商品二维码
+    </p>
+    <p>
+        <span class="btn" style="width:120px; background-color:green;margin:0 auto;" onclick="do_scan()">扫一扫</span>
+        <textarea rows="3" style="border:1px solid #ccc; margin:10px 0;width:100%;box-sizing:border-box;" id="tb_no"></textarea>
+        <span class="btn" onclick="do_check()">立即查询</span>
+    </p>
+    <p style="font-size:14px;line-height:26px;" id="lb_info"></p>
+    #parse("wx/_foot.html")
+    <script>
+        function do_check() {
+            var no = $("#tb_no").val();
+            if (!no) { alert("请输入商品防伪码，或扫描商品防伪二维码"); return; }
+            if (no.length != 32) { alert("商品防伪码不正确，请重新输入或扫描商品防伪二维码"); return; }
+            doapi("wx.check", { no: no }, function (d) {
+                if (!d.issucc) return;
+                var tp = $("#lb_info");
+                if (d.ct == -1) tp.html("请注意：您购买的商品为假冒产品，请在我们授权的店面购买正品！！！");
+                else if (d.self == false) tp.html('您购买的商品疑似假冒产品，当前已经查询<span style="font-weight:bold;color:red;">' + d.ct + '</span>次' + (d.lt ? '，上次查询时间为：<span style="font-weight:bold;color:red;">2017-09-06 20:00:00</span>' : '') + '，非本人查询！！！');
+                else if (d.ct >= 1) tp.html('您购买的商品为正品，当前已经查询<span style="font-weight:bold;color:red;">' + d.ct + '</span>次，上次查询时间为：<span style="font-weight:bold;color:red;">' + d.lt + '</span>，感谢支持！');
+                else tp.html('您购买的商品为正品，是第一次查验，感谢支持！');
+            });
+        }
+
+        function do_scan() {
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    $("#tb_no").val(res.resultStr);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -20,24 +20,20 @@ namespace X.App.Apis.com
         protected override XResp Execute()
         {
             var sc = CacheHelper.Get<string>("img.code." + tel);
-            if (sc != code) throw new XExcep("0x0005");
+            if (sc != code) throw new XExcep("T图片验证码不正确");
             CacheHelper.Remove("img.code." + tel);
             try
             {
                 var smscode = Tools.GetRandRom(4, 1);
                 var re = Sms.SendSms(tel, "您的验证码为：" + smscode + "，请保密。");
-                var m = new Regex(",([\\d+])\n").Match(re);
-                if (m.Success && m.Groups[1].Value == "0")
-                {
-                    CacheHelper.Save("sms.code." + tel, smscode, 5 * 60);
-                    return new XResp();
-                }
-                else if (m.Groups.Count > 0) throw new Exception(m.Groups[1].Value);
-                else throw new Exception(re);
+                var rt = Serialize.JsonToDict(re);
+                if (rt["code"] != "0") throw new Exception(rt["errorMsg"]);
+                CacheHelper.Save("sms.code." + tel, smscode, 5 * 60);
+                return new XResp();
             }
             catch (Exception e)
             {
-                throw new XExcep("0x0006", e.Message);
+                throw new XExcep("短信发送出错，信息：", e.Message);
             }
         }
     }

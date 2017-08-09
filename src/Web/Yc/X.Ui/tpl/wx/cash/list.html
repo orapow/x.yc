@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    #parse("wx/_head.html")
+    <title>兑换记录</title>
+    <style>
+        body { background: #f1f1f1; }
+        .c_li { margin-bottom: 10px; background: #fff; padding: 10px; position: relative; }
+        .c_cell { padding: 2px 0; }
+        .c_cell b { font-size: 14px; font-weight: bold; color: #94193f; }
+        .c_cell span { }
+        .t_border { border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .t_r { text-align: right; }
+        .c_del { padding: 5px 5px 0 0; right: 5px; position: absolute; top: 5px; }
+    </style>
+</head>
+<body>
+    <div class="c_list">
+        #foreach($c in $list)
+        <div class="c_li">
+            <div class="c_cell">金额：<b>￥$c.amount</b></div>
+            <div class="c_cell">提交时间：<span>$c.ctime</span></div>
+            <div class="c_cell">状态：$c.st_name</div>
+            #if($c.status==3)<div class="c_cell" style="line-height:20px;">$c.remark</div>#end
+            <div class="c_del" onclick="do_del($c.id)"><img src="/img/wx/del.png" height="16" style="vertical-align:bottom;" /> 删除</div>
+        </div>
+        #end
+    </div>
+    #parse("wx/_foot.html")
+    <script type="text/javascript">
+        function do_del(id) {
+            if (!confirm("是否要删除此兑换记录？")) return;
+            doapi("wx.cash.del", { id: id }, function (d) {
+                if (!d.issucc) return;
+                document.location.reload();
+            })
+        }
+    </script>
+</body>
+</html>

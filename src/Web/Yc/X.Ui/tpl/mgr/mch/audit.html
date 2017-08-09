@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    #parse("mgr/com/_head.html")
+    <title>商户审核 - $cfg.name</title>
+</head>
+<body>
+    <x:form api="mgr.user.audit">
+        <input type="hidden" value="$id" x-check="" name="id" />
+        <table border="1" style="margin-left:80px;margin-right:80px; margin-bottom:15px;">
+            <tr>
+                <td colspan="2">
+                    <img src="$item.headimg" width="60" /> $item.name $item.tel
+                </td>
+            </tr>
+            <tr>
+                <td>手持身份证：<br /><img src="$item.card" /></td>
+                <td>营业执照：<br /><img src="$item.certificate" /></td>
+            </tr>
+        </table>
+        <x:pick title="审核状态" name="st" src="loc:通过|不通过" mode="2" />
+        <x:text title="备注" tp="3" name="remark" size="3" />
+        <div class="btns">
+            <button type="submit" class="btn btn-primary">提交保存</button>
+        </div>
+    </x:form>
+    <script type="text/javascript">
+        $("form:eq(0)").xform({
+            callback: function (d) { x.closewin(); }
+        });
+    </script>
+</body>
+</html>

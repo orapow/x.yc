@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     #parse("wx/_head.html")
-    <title>注册</title>
-    <style type="text/css">
-        .tis { background: url(/img/wx/zd_03.png) 20% 0px no-repeat; background-size: 20px; }
-    </style>
+    <title>绑定手机号</title>
 </head>
 <body style="background:#f4f4f4;">
     <!--内容-->
@@ -13,32 +10,25 @@
         <ul>
             <li class="en03">
                 <p>手机号码</p>
-                <input type="text" placeholder="请输入您的手机号码" id="bt_tel" onblur="if(this.value) $('.img_code').attr('src', '/com/code-' + this.value + '.html')" />
+                <input type="text" placeholder="请输入您的手机号码" id="bt_tel" onblur="if(this.value)$('.img_code').attr('src','/com/code-'+this.value+'.html')" />
             </li>
             <li class="en03">
                 <p>图片验证码</p>
-                <input type="text" class="en20" placeholder="请输入图片验证码" id="id_picCode" />
-                <img src="" style="margin-top:15px;" class="img_code" />
-            </li>
-        </ul>
-        <div class="qr" id="bt_stcode" style="background-color:#12b36d;width:50%;font-size: 14px; margin:10px auto;color:white;" onclick="sendcode();">获取验证码</div>
-        <ul>
-            <li class="en03">
-                <p>短信验证码</p>
-                <input type="text" placeholder="请输入短信验证码" required="required" id="id_inputCode" />
-            </li>
-            <li class="en03">
-                <p>设置密码</p>
-                <input type="text" placeholder="请输入6~18位字母与数字作为密码" required="required" id="id_1stPswd" />
-            </li>
-            <li class="en03">
-                <p>重复密码</p>
-                <input type="text" placeholder="请再次输入您的登录密码" required="required" id="id_2ndPswd" />
+                <input type="text" class="en20" placeholder="请输入图片验证码" id="bt_pcode" />
+                <img src="" class="img_code" style="margin-top:15px;" onclick="this.src = this.src.split('?')[0] + '?' + new Date().getTime();" />
             </li>
         </ul>
     </div>
-    <div class="qr"><a href="javascript:;" style="color:white;display:block;height:100%;" onclick="register()">立即注册</a></div>
-    <a href="#" class="tis">登录即代表您同意服务协议</a>
+    <div class="qr" id="bt_stcode" style="background-color:#12b36d;width:50%;font-size: 14px; margin:10px auto;color:white;" onclick="sendcode();">获取验证码</div>
+    <div class="zhil01">
+        <ul>
+            <li class="en03">
+                <p>短信验证码</p>
+                <input type="text" placeholder="请输入短信验证码" id="bt_scode" />
+            </li>
+        </ul>
+    </div>
+    <div class="qr" style="color:white;font-size: 14px;" onclick="do_bind()">确定</div>
     #parse("wx/_foot.html")
     <script type="text/javascript">
         var tel = "";
@@ -48,7 +38,7 @@
             if (count > 0) return;
             tel = $("#bt_tel").val();
             if (!tel) { alert("手机号码不能为空"); return; }
-            var pcode = $("#id_picCode").val();
+            var pcode = $("#bt_pcode").val();
             if (!pcode) { alert("图片验证码不能为空"); return; }
             startcouting();
             doapi("com.sendcode", { tel: tel, code: pcode }, function (d) {
@@ -70,16 +60,14 @@
             }, 1000);
         }
 
-        function do_reg() {
+        function do_bind() {
             var data = {
                 code: $("#bt_scode").val(),
-                opid: "$!opid",
-                pwd: $("#id_1stPswd").val(),
                 tel: tel
             };
             if (!data.tel) { alert("手机号码不能为空"); return; }
             if (!data.code) { alert("短信验证码不能为空"); return; }
-            doapi("wx.reg", data, function (d) {
+            doapi("wx.user.bind", data, function (d) {
                 if (!d.issucc) return;
                 document.location.href = "/wx/user/index.html";
             });

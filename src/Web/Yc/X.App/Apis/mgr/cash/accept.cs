@@ -34,6 +34,15 @@ namespace X.App.Apis.mgr.cash
             {
                 chg.status = 2;
                 chg.remark = "审核人：" + mg.name + "，审核时间：" + DateTime.Now + "，同意提现，支付成功，微信单号：" + psp.payment_no;
+
+                var v = chg.amount / cfg.credit;
+                chg.x_user.x_exp_log.Add(new x_exp_log()
+                {
+                    ctime = DateTime.Now,
+                    remark = "积分兑换支出",
+                    val = -v
+                });
+
             }
             else
             {
@@ -41,6 +50,7 @@ namespace X.App.Apis.mgr.cash
             }
 
             chg.atime = DateTime.Now;
+
             SubmitDBChanges();
 
             return new XResp();

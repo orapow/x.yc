@@ -9,7 +9,7 @@ p, ul li, ul, h4, input, div, img, h3, h2, tr th, tr td, header, button { paddin
 a { color: #333; text-decoration: none; cursor: pointer; }
 img, a { border: 0; padding: 0px; margin: 0px; }
 .clear { clear: both; }
-.bg { width: 100%; background: url(/img/wx/ws_02.jpg) no-repeat; background-size: 100%; }
+.bg { width: 100%; background: url(/img/wx/ws_02.jpg) no-repeat; background-size: cover; background-position: center 110%; }
 .biao { display: block; width: 80px; height: 40px; background: url(/img/wx/tu_03.png) no-repeat; background-size: 100%; position: absolute; bottom: 100px; right: 20px; }
 .loading { display: none; }
 

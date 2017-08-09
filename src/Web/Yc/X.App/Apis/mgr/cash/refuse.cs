@@ -25,7 +25,8 @@ namespace X.App.Apis.mgr.cash
 
             cit.status = 3;
             cit.atime = DateTime.Now;
-            cit.remark = "审核人：" + mg.name + "审核时间：" + DateTime.Now + "，拒绝申请，原因：" + reason;
+            cit.remark = "申请被拒绝，原因：" + reason + "<br/>审核人：" + mg.name + " " + DateTime.Now;
+            cit.x_user.used_exp -= cit.amount / 10;//退回积分
             SubmitDBChanges();
 
             return new XResp();

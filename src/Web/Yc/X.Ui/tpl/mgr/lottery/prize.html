@@ -33,16 +33,16 @@
             searchcon: { page: 1, limit: 30 },
             api: "mgr.lottery.prize",
             fs: [
-                { t: "会员", f: "<img src='{up}' height='60'/>{name}", w: 120, align: "left" },
-                { t: "开奖标题", f: "{sum}", w: 160, align: "center" },
-                { t: "奖品", f: "{ctime}", w: 200, align: "center" },
-                { t: "价值", f: "{ctime}", w: 80, align: "center" },
-                { t: "是否领奖", f: "{open}", w: 60, align: "center" },
-                { t: "领取时间", f: "{open}", w: 80, align: "center" },
-                { t: "领取备注", f: "{open}", w: 220, align: "left" }
+                { t: "会员", f: "<img src='{up}' style='height:40px;'/> {name}", w: 120, align: "left" },
+                { t: "开奖标题", f: "{title}", w: 160, align: "center" },
+                { t: "奖品", f: "{prize}", w: 200, align: "center" },
+                { t: "价值", f: "{val}", w: 80, align: "center" },
+                { t: "是否领奖", f: "{isget}", w: 60, align: "center" },
+                { t: "领取时间", f: "{gtime}", w: 80, align: "center" },
+                { t: "领取备注", f: "{remark}", w: 220, align: "center" }
             ],
             btns: [
-                //{ txt: "删除", ico: "remove", act: "del" }
+                //{ txt: "逾期", ico: "remove", act: "out" }
             ]
         };
 

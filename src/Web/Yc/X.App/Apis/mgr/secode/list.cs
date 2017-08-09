@@ -49,7 +49,7 @@ namespace X.App.Apis.mgr.secode
             r.count = q.Count();
             return r;
         }
-        string getuser(int? id)
+        string getuser(long? id)
         {
             if (id == null) return "";
             var u = DB.x_user.FirstOrDefault(o => o.user_id == id);

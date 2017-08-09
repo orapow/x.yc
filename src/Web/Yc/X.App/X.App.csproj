@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding.Net35">
+      <HintPath>..\..\..\..\libs\Gma.QrCodeNet.Encoding.Net35.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
@@ -86,6 +89,7 @@
     <Compile Include="Apis\mgr\sys\dict\save.cs" />
     <Compile Include="Apis\mgr\user\del.cs" />
     <Compile Include="Apis\mgr\user\list.cs" />
+    <Compile Include="Apis\mgr\user\audit.cs" />
     <Compile Include="Apis\mgr\user\setattr.cs" />
     <Compile Include="Apis\mgr\user\setpwd.cs" />
     <Compile Include="Apis\mgr\xmg.cs" />
@@ -101,19 +105,20 @@
     <Compile Include="Apis\wx\cart\pout.cs" />
     <Compile Include="Apis\wx\cart\pin.cs" />
     <Compile Include="Apis\wx\cart\psel.cs" />
+    <Compile Include="Apis\wx\cash\del.cs" />
+    <Compile Include="Views\wx\cash\list.cs" />
     <Compile Include="Apis\wx\goods\cate.cs" />
     <Compile Include="Apis\wx\goods\list.cs" />
-    <Compile Include="Apis\wx\logout.cs" />
-    <Compile Include="Apis\wx\login.cs" />
     <Compile Include="Apis\wx\mch\reg.cs" />
+    <Compile Include="Apis\wx\check.cs" />
     <Compile Include="Apis\wx\newtk.cs" />
     <Compile Include="Apis\wx\order\acpt.cs" />
     <Compile Include="Apis\wx\order\refund.cs" />
     <Compile Include="Apis\wx\order\cancel.cs" />
     <Compile Include="Apis\wx\order\pay.cs" />
     <Compile Include="Apis\wx\order\md.cs" />
-    <Compile Include="Apis\wx\reg.cs" />
     <Compile Include="Apis\wx\user\bind.cs" />
+    <Compile Include="Apis\wx\cash\submit.cs" />
     <Compile Include="Apis\wx\_wx.cs" />
     <Compile Include="Apis\xapi.cs" />
     <Compile Include="Com\Config.cs" />
@@ -140,7 +145,7 @@
     <Compile Include="Views\mgr\lottery\pool.cs" />
     <Compile Include="Views\mgr\lottery\records\edit.cs" />
     <Compile Include="Views\mgr\lottery\records\list.cs" />
-    <Compile Include="Views\mgr\mch\edit.cs" />
+    <Compile Include="Views\mgr\mch\audit.cs" />
     <Compile Include="Views\mgr\mch\list.cs" />
     <Compile Include="Views\mgr\order\manual.cs" />
     <Compile Include="Views\mgr\secode\create.cs" />
@@ -171,32 +176,30 @@
     <Compile Include="Views\wx\addr\edit.cs" />
     <Compile Include="Views\wx\addr\list.cs" />
     <Compile Include="Views\wx\arti\detail.cs" />
-    <Compile Include="Views\wx\bounds.cs" />
+    <Compile Include="Views\wx\bonus.cs" />
+    <Compile Include="Views\wx\check.cs" />
+    <Compile Include="Views\wx\explog\list.cs" />
     <Compile Include="Views\wx\invite.cs" />
-    <Compile Include="Views\wx\mch\index.cs" />
     <Compile Include="Views\wx\mch\audit.cs" />
     <Compile Include="Views\wx\mch\no.cs" />
     <Compile Include="Views\wx\mch\reg.cs" />
     <Compile Include="Views\wx\order\refund.cs" />
-    <Compile Include="Views\wx\reg.cs" />
-    <Compile Include="Views\wx\login.cs" />
-    <Compile Include="Views\wx\fpwd.cs" />
     <Compile Include="Views\wx\order\detail.cs" />
     <Compile Include="Views\wx\order\list.cs" />
     <Compile Include="Views\wx\order\succ.cs" />
     <Compile Include="Views\wx\bind.cs" />
-    <Compile Include="Views\wx\user\deposit.cs" />
-    <Compile Include="Views\wx\user\mpwd.cs" />
+    <Compile Include="Views\wx\cash\submit.cs" />
+    <Compile Include="Views\wx\user\bonus.cs" />
+    <Compile Include="Views\wx\user\qrcode.cs" />
+    <Compile Include="Views\wx\user\bind.cs" />
     <Compile Include="Views\wx\balance\chg.cs" />
     <Compile Include="Views\wx\user\subuser.cs" />
-    <Compile Include="Views\wx\user\update.cs" />
     <Compile Include="Views\wx\user\index.cs" />
     <Compile Include="Views\wx\notify.cs" />
     <Compile Include="Views\wx\goods\detail.cs" />
     <Compile Include="Views\wx\user\cart.cs" />
     <Compile Include="Views\wx\index.cs" />
     <Compile Include="Views\wx\goods\list.cs" />
-    <Compile Include="Views\wx\user\setting.cs" />
     <Compile Include="Views\wx\_wx.cs" />
     <Compile Include="Views\xview.cs" />
     <Compile Include="Views\com\view.cs" />

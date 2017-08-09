@@ -9,11 +9,14 @@ namespace X.App.Views.wx
     public class invite : _wx
     {
         public int uid { get; set; }
+
+        public string no { get; set; }
+
         protected override string GetParmNames
         {
             get
             {
-                return "uid";
+                return "uid-no";
             }
         }
         protected override void InitView()
@@ -21,10 +24,14 @@ namespace X.App.Views.wx
             base.InitView();
             if (cu.invter == 0 && uid > 0)
             {
-                cu.invter = uid;
-                SubmitDBChanges();
-                Context.Response.Redirect("/wx/goods/list.html");
+                var u = DB.x_user.FirstOrDefault(o => o.user_id == uid);
+                if (u != null)
+                {
+                    cu.invter = u.id;
+                    SubmitDBChanges();
+                }
             }
+            Context.Response.Redirect("/wx/goods/list.html");
         }
     }
 }

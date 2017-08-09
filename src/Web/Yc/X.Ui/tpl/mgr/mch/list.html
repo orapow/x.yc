@@ -42,10 +42,16 @@
                 { t: "备注", f: "{remark}", w: 160, align: "center" },
             ],
             btns: [
-                { txt: "删除", ico: "remove", act: "del" },
-                { txt: "审核", ico: "key", act: "audit" },
+                { txt: "删除", ico: "remove", act: "del" }
             ]
         };
+
+        cfg.getbtns = function (d) {
+            var btns = [];
+            if (d.audit == 1) btns.push({ txt: "审核", ico: "key", act: "audit", confirm: false });
+            if (d.audit == 2) btns.push({ txt: d.off == true ? "启用" : "停用", ico: "off", act: "off" });
+            return btns;
+        }
 
         //(初始:1,通过:2,不通过:3)
         cfg.cellclick = function (act, d) {
@@ -53,12 +59,30 @@
                 case "del":
                     do_user_del(d.id);
                     break;
+                case "audit":
+                    show_audit(d.id);
+                    break;
+                case "off":
+                    do_user_off(d.id);
+                    break;
                 default:
                     x.alert("动作" + act + "未定义");
                     break;
             }
         };
         var g = x.grid.init(cfg);
+
+        function show_audit(id) {
+            x.openwin("audit-" + id + ".html", "商户审核", function () {
+                g.getlist();
+            }, { w: 600, h: 400 });
+        }
+
+        function do_user_off(id) {
+            x.doapi("mgr.user.off", { id: id }, function () {
+                g.getlist();
+            });
+        }
 
         function do_user_del(id) {
             x.doapi("mgr.user.del", { id: id }, function () {

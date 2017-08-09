@@ -38,7 +38,7 @@ namespace X.App.Apis.mgr.lottery
                 up = u.x_user.headimg,
                 u.title,
                 gtime = u.gtime?.ToString("yyyy-MM-dd<br>HH:mm"),
-                u.isget,
+                isget = u.isget == true ? "是" : "否",
                 u.prize,
                 u.remark,
                 u.val,

@@ -45,9 +45,6 @@ namespace X.Data
     partial void Insertx_mgr(x_mgr instance);
     partial void Updatex_mgr(x_mgr instance);
     partial void Deletex_mgr(x_mgr instance);
-    partial void Insertx_secode(x_secode instance);
-    partial void Updatex_secode(x_secode instance);
-    partial void Deletex_secode(x_secode instance);
     partial void Insertx_lottery(x_lottery instance);
     partial void Updatex_lottery(x_lottery instance);
     partial void Deletex_lottery(x_lottery instance);
@@ -66,9 +63,6 @@ namespace X.Data
     partial void Insertx_address(x_address instance);
     partial void Updatex_address(x_address instance);
     partial void Deletex_address(x_address instance);
-    partial void Insertx_user_prize(x_user_prize instance);
-    partial void Updatex_user_prize(x_user_prize instance);
-    partial void Deletex_user_prize(x_user_prize instance);
     partial void Insertx_lottery_log(x_lottery_log instance);
     partial void Updatex_lottery_log(x_lottery_log instance);
     partial void Deletex_lottery_log(x_lottery_log instance);
@@ -84,10 +78,16 @@ namespace X.Data
     partial void Insertx_user(x_user instance);
     partial void Updatex_user(x_user instance);
     partial void Deletex_user(x_user instance);
+    partial void Insertx_secode(x_secode instance);
+    partial void Updatex_secode(x_secode instance);
+    partial void Deletex_secode(x_secode instance);
+    partial void Insertx_user_prize(x_user_prize instance);
+    partial void Updatex_user_prize(x_user_prize instance);
+    partial void Deletex_user_prize(x_user_prize instance);
     #endregion
 		
 		public DataClassesDataContext() : 
-				base(global::X.Data.Properties.Settings.Default.x_ycConnectionString, mappingSource)
+				base(global::X.Data.Properties.Settings.Default.x_yc, mappingSource)
 		{
 			OnCreated();
 		}
@@ -156,14 +156,6 @@ namespace X.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<x_secode> x_secode
-		{
-			get
-			{
-				return this.GetTable<x_secode>();
-			}
-		}
-		
 		public System.Data.Linq.Table<x_lottery> x_lottery
 		{
 			get
@@ -212,14 +204,6 @@ namespace X.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<x_user_prize> x_user_prize
-		{
-			get
-			{
-				return this.GetTable<x_user_prize>();
-			}
-		}
-		
 		public System.Data.Linq.Table<x_lottery_log> x_lottery_log
 		{
 			get
@@ -257,6 +241,22 @@ namespace X.Data
 			get
 			{
 				return this.GetTable<x_user>();
+			}
+		}
+		
+		public System.Data.Linq.Table<x_secode> x_secode
+		{
+			get
+			{
+				return this.GetTable<x_secode>();
+			}
+		}
+		
+		public System.Data.Linq.Table<x_user_prize> x_user_prize
+		{
+			get
+			{
+				return this.GetTable<x_user_prize>();
 			}
 		}
 		
@@ -2374,188 +2374,6 @@ namespace X.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.x_secode")]
-	public partial class x_secode : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _secode_id;
-		
-		private System.Nullable<int> _batch;
-		
-		private System.Nullable<int> _incode;
-		
-		private string _outcode;
-		
-		private System.Nullable<int> _user_id;
-		
-		private System.Nullable<System.DateTime> _stime;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onsecode_idChanging(long value);
-    partial void Onsecode_idChanged();
-    partial void OnbatchChanging(System.Nullable<int> value);
-    partial void OnbatchChanged();
-    partial void OnincodeChanging(System.Nullable<int> value);
-    partial void OnincodeChanged();
-    partial void OnoutcodeChanging(string value);
-    partial void OnoutcodeChanged();
-    partial void Onuser_idChanging(System.Nullable<int> value);
-    partial void Onuser_idChanged();
-    partial void OnstimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnstimeChanged();
-    #endregion
-		
-		public x_secode()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_secode_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long secode_id
-		{
-			get
-			{
-				return this._secode_id;
-			}
-			set
-			{
-				if ((this._secode_id != value))
-				{
-					this.Onsecode_idChanging(value);
-					this.SendPropertyChanging();
-					this._secode_id = value;
-					this.SendPropertyChanged("secode_id");
-					this.Onsecode_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_batch", DbType="Int")]
-		public System.Nullable<int> batch
-		{
-			get
-			{
-				return this._batch;
-			}
-			set
-			{
-				if ((this._batch != value))
-				{
-					this.OnbatchChanging(value);
-					this.SendPropertyChanging();
-					this._batch = value;
-					this.SendPropertyChanged("batch");
-					this.OnbatchChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_incode", DbType="Int")]
-		public System.Nullable<int> incode
-		{
-			get
-			{
-				return this._incode;
-			}
-			set
-			{
-				if ((this._incode != value))
-				{
-					this.OnincodeChanging(value);
-					this.SendPropertyChanging();
-					this._incode = value;
-					this.SendPropertyChanged("incode");
-					this.OnincodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_outcode", DbType="NVarChar(32)")]
-		public string outcode
-		{
-			get
-			{
-				return this._outcode;
-			}
-			set
-			{
-				if ((this._outcode != value))
-				{
-					this.OnoutcodeChanging(value);
-					this.SendPropertyChanging();
-					this._outcode = value;
-					this.SendPropertyChanged("outcode");
-					this.OnoutcodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="Int")]
-		public System.Nullable<int> user_id
-		{
-			get
-			{
-				return this._user_id;
-			}
-			set
-			{
-				if ((this._user_id != value))
-				{
-					this.Onuser_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_id = value;
-					this.SendPropertyChanged("user_id");
-					this.Onuser_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_stime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> stime
-		{
-			get
-			{
-				return this._stime;
-			}
-			set
-			{
-				if ((this._stime != value))
-				{
-					this.OnstimeChanging(value);
-					this.SendPropertyChanging();
-					this._stime = value;
-					this.SendPropertyChanged("stime");
-					this.OnstimeChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.x_lottery")]
 	public partial class x_lottery : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4285,325 +4103,6 @@ namespace X.Data
 					if ((value != null))
 					{
 						value.x_address.Add(this);
-						this._user_id = value.user_id;
-					}
-					else
-					{
-						this._user_id = default(Nullable<long>);
-					}
-					this.SendPropertyChanged("x_user");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.x_user_prize")]
-	public partial class x_user_prize : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _user_prize_id;
-		
-		private System.Nullable<long> _user_id;
-		
-		private System.Nullable<long> _lottery_run_id;
-		
-		private string _title;
-		
-		private System.Nullable<System.DateTime> _ctime;
-		
-		private string _prize;
-		
-		private System.Nullable<decimal> _val;
-		
-		private System.Nullable<bool> _isget;
-		
-		private System.Nullable<System.DateTime> _gtime;
-		
-		private string _remark;
-		
-		private EntityRef<x_user> _x_user;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onuser_prize_idChanging(long value);
-    partial void Onuser_prize_idChanged();
-    partial void Onuser_idChanging(System.Nullable<long> value);
-    partial void Onuser_idChanged();
-    partial void Onlottery_run_idChanging(System.Nullable<long> value);
-    partial void Onlottery_run_idChanged();
-    partial void OntitleChanging(string value);
-    partial void OntitleChanged();
-    partial void OnctimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnctimeChanged();
-    partial void OnprizeChanging(string value);
-    partial void OnprizeChanged();
-    partial void OnvalChanging(System.Nullable<decimal> value);
-    partial void OnvalChanged();
-    partial void OnisgetChanging(System.Nullable<bool> value);
-    partial void OnisgetChanged();
-    partial void OngtimeChanging(System.Nullable<System.DateTime> value);
-    partial void OngtimeChanged();
-    partial void OnremarkChanging(string value);
-    partial void OnremarkChanged();
-    #endregion
-		
-		public x_user_prize()
-		{
-			this._x_user = default(EntityRef<x_user>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_prize_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long user_prize_id
-		{
-			get
-			{
-				return this._user_prize_id;
-			}
-			set
-			{
-				if ((this._user_prize_id != value))
-				{
-					this.Onuser_prize_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_prize_id = value;
-					this.SendPropertyChanged("user_prize_id");
-					this.Onuser_prize_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="BigInt")]
-		public System.Nullable<long> user_id
-		{
-			get
-			{
-				return this._user_id;
-			}
-			set
-			{
-				if ((this._user_id != value))
-				{
-					if (this._x_user.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onuser_idChanging(value);
-					this.SendPropertyChanging();
-					this._user_id = value;
-					this.SendPropertyChanged("user_id");
-					this.Onuser_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lottery_run_id", DbType="BigInt")]
-		public System.Nullable<long> lottery_run_id
-		{
-			get
-			{
-				return this._lottery_run_id;
-			}
-			set
-			{
-				if ((this._lottery_run_id != value))
-				{
-					this.Onlottery_run_idChanging(value);
-					this.SendPropertyChanging();
-					this._lottery_run_id = value;
-					this.SendPropertyChanged("lottery_run_id");
-					this.Onlottery_run_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_title", DbType="NVarChar(200)")]
-		public string title
-		{
-			get
-			{
-				return this._title;
-			}
-			set
-			{
-				if ((this._title != value))
-				{
-					this.OntitleChanging(value);
-					this.SendPropertyChanging();
-					this._title = value;
-					this.SendPropertyChanged("title");
-					this.OntitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ctime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> ctime
-		{
-			get
-			{
-				return this._ctime;
-			}
-			set
-			{
-				if ((this._ctime != value))
-				{
-					this.OnctimeChanging(value);
-					this.SendPropertyChanging();
-					this._ctime = value;
-					this.SendPropertyChanged("ctime");
-					this.OnctimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_prize", DbType="NVarChar(200)")]
-		public string prize
-		{
-			get
-			{
-				return this._prize;
-			}
-			set
-			{
-				if ((this._prize != value))
-				{
-					this.OnprizeChanging(value);
-					this.SendPropertyChanging();
-					this._prize = value;
-					this.SendPropertyChanged("prize");
-					this.OnprizeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_val", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> val
-		{
-			get
-			{
-				return this._val;
-			}
-			set
-			{
-				if ((this._val != value))
-				{
-					this.OnvalChanging(value);
-					this.SendPropertyChanging();
-					this._val = value;
-					this.SendPropertyChanged("val");
-					this.OnvalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isget", DbType="Bit")]
-		public System.Nullable<bool> isget
-		{
-			get
-			{
-				return this._isget;
-			}
-			set
-			{
-				if ((this._isget != value))
-				{
-					this.OnisgetChanging(value);
-					this.SendPropertyChanging();
-					this._isget = value;
-					this.SendPropertyChanged("isget");
-					this.OnisgetChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gtime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> gtime
-		{
-			get
-			{
-				return this._gtime;
-			}
-			set
-			{
-				if ((this._gtime != value))
-				{
-					this.OngtimeChanging(value);
-					this.SendPropertyChanging();
-					this._gtime = value;
-					this.SendPropertyChanged("gtime");
-					this.OngtimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remark", DbType="NVarChar(400)")]
-		public string remark
-		{
-			get
-			{
-				return this._remark;
-			}
-			set
-			{
-				if ((this._remark != value))
-				{
-					this.OnremarkChanging(value);
-					this.SendPropertyChanging();
-					this._remark = value;
-					this.SendPropertyChanged("remark");
-					this.OnremarkChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="x_user_x_user_prize", Storage="_x_user", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
-		public x_user x_user
-		{
-			get
-			{
-				return this._x_user.Entity;
-			}
-			set
-			{
-				x_user previousValue = this._x_user.Entity;
-				if (((previousValue != value) 
-							|| (this._x_user.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._x_user.Entity = null;
-						previousValue.x_user_prize.Remove(this);
-					}
-					this._x_user.Entity = value;
-					if ((value != null))
-					{
-						value.x_user_prize.Add(this);
 						this._user_id = value.user_id;
 					}
 					else
@@ -6437,9 +5936,9 @@ namespace X.Data
 		
 		private EntitySet<x_address> _x_address;
 		
-		private EntitySet<x_user_prize> _x_user_prize;
-		
 		private EntitySet<x_order> _x_order;
+		
+		private EntitySet<x_user_prize> _x_user_prize;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -6503,8 +6002,8 @@ namespace X.Data
 			this._x_exp_log = new EntitySet<x_exp_log>(new Action<x_exp_log>(this.attach_x_exp_log), new Action<x_exp_log>(this.detach_x_exp_log));
 			this._x_cash_log = new EntitySet<x_cash_log>(new Action<x_cash_log>(this.attach_x_cash_log), new Action<x_cash_log>(this.detach_x_cash_log));
 			this._x_address = new EntitySet<x_address>(new Action<x_address>(this.attach_x_address), new Action<x_address>(this.detach_x_address));
-			this._x_user_prize = new EntitySet<x_user_prize>(new Action<x_user_prize>(this.attach_x_user_prize), new Action<x_user_prize>(this.detach_x_user_prize));
 			this._x_order = new EntitySet<x_order>(new Action<x_order>(this.attach_x_order), new Action<x_order>(this.detach_x_order));
+			this._x_user_prize = new EntitySet<x_user_prize>(new Action<x_user_prize>(this.attach_x_user_prize), new Action<x_user_prize>(this.detach_x_user_prize));
 			OnCreated();
 		}
 		
@@ -7060,19 +6559,6 @@ namespace X.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="x_user_x_user_prize", Storage="_x_user_prize", ThisKey="user_id", OtherKey="user_id")]
-		public EntitySet<x_user_prize> x_user_prize
-		{
-			get
-			{
-				return this._x_user_prize;
-			}
-			set
-			{
-				this._x_user_prize.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="x_user_x_order", Storage="_x_order", ThisKey="user_id", OtherKey="user_id")]
 		public EntitySet<x_order> x_order
 		{
@@ -7083,6 +6569,19 @@ namespace X.Data
 			set
 			{
 				this._x_order.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="x_user_x_user_prize", Storage="_x_user_prize", ThisKey="user_id", OtherKey="user_id")]
+		public EntitySet<x_user_prize> x_user_prize
+		{
+			get
+			{
+				return this._x_user_prize;
+			}
+			set
+			{
+				this._x_user_prize.Assign(value);
 			}
 		}
 		
@@ -7154,6 +6653,18 @@ namespace X.Data
 			entity.x_user = null;
 		}
 		
+		private void attach_x_order(x_order entity)
+		{
+			this.SendPropertyChanging();
+			entity.x_user = this;
+		}
+		
+		private void detach_x_order(x_order entity)
+		{
+			this.SendPropertyChanging();
+			entity.x_user = null;
+		}
+		
 		private void attach_x_user_prize(x_user_prize entity)
 		{
 			this.SendPropertyChanging();
@@ -7165,17 +6676,554 @@ namespace X.Data
 			this.SendPropertyChanging();
 			entity.x_user = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.x_secode")]
+	public partial class x_secode : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_x_order(x_order entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _secode_id;
+		
+		private System.Nullable<long> _user_id;
+		
+		private System.Nullable<int> _batch;
+		
+		private System.Nullable<int> _incode;
+		
+		private string _outcode;
+		
+		private System.Nullable<int> _scount;
+		
+		private System.Nullable<System.DateTime> _stime;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onsecode_idChanging(long value);
+    partial void Onsecode_idChanged();
+    partial void Onuser_idChanging(System.Nullable<long> value);
+    partial void Onuser_idChanged();
+    partial void OnbatchChanging(System.Nullable<int> value);
+    partial void OnbatchChanged();
+    partial void OnincodeChanging(System.Nullable<int> value);
+    partial void OnincodeChanged();
+    partial void OnoutcodeChanging(string value);
+    partial void OnoutcodeChanged();
+    partial void OnscountChanging(System.Nullable<int> value);
+    partial void OnscountChanged();
+    partial void OnstimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnstimeChanged();
+    #endregion
+		
+		public x_secode()
 		{
-			this.SendPropertyChanging();
-			entity.x_user = this;
+			OnCreated();
 		}
 		
-		private void detach_x_order(x_order entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_secode_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long secode_id
 		{
-			this.SendPropertyChanging();
-			entity.x_user = null;
+			get
+			{
+				return this._secode_id;
+			}
+			set
+			{
+				if ((this._secode_id != value))
+				{
+					this.Onsecode_idChanging(value);
+					this.SendPropertyChanging();
+					this._secode_id = value;
+					this.SendPropertyChanged("secode_id");
+					this.Onsecode_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="BigInt")]
+		public System.Nullable<long> user_id
+		{
+			get
+			{
+				return this._user_id;
+			}
+			set
+			{
+				if ((this._user_id != value))
+				{
+					this.Onuser_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_id = value;
+					this.SendPropertyChanged("user_id");
+					this.Onuser_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_batch", DbType="Int")]
+		public System.Nullable<int> batch
+		{
+			get
+			{
+				return this._batch;
+			}
+			set
+			{
+				if ((this._batch != value))
+				{
+					this.OnbatchChanging(value);
+					this.SendPropertyChanging();
+					this._batch = value;
+					this.SendPropertyChanged("batch");
+					this.OnbatchChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_incode", DbType="Int")]
+		public System.Nullable<int> incode
+		{
+			get
+			{
+				return this._incode;
+			}
+			set
+			{
+				if ((this._incode != value))
+				{
+					this.OnincodeChanging(value);
+					this.SendPropertyChanging();
+					this._incode = value;
+					this.SendPropertyChanged("incode");
+					this.OnincodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_outcode", DbType="NVarChar(32)")]
+		public string outcode
+		{
+			get
+			{
+				return this._outcode;
+			}
+			set
+			{
+				if ((this._outcode != value))
+				{
+					this.OnoutcodeChanging(value);
+					this.SendPropertyChanging();
+					this._outcode = value;
+					this.SendPropertyChanged("outcode");
+					this.OnoutcodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_scount", DbType="Int")]
+		public System.Nullable<int> scount
+		{
+			get
+			{
+				return this._scount;
+			}
+			set
+			{
+				if ((this._scount != value))
+				{
+					this.OnscountChanging(value);
+					this.SendPropertyChanging();
+					this._scount = value;
+					this.SendPropertyChanged("scount");
+					this.OnscountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_stime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> stime
+		{
+			get
+			{
+				return this._stime;
+			}
+			set
+			{
+				if ((this._stime != value))
+				{
+					this.OnstimeChanging(value);
+					this.SendPropertyChanging();
+					this._stime = value;
+					this.SendPropertyChanged("stime");
+					this.OnstimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.x_user_prize")]
+	public partial class x_user_prize : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _user_prize_id;
+		
+		private System.Nullable<long> _user_id;
+		
+		private System.Nullable<long> _lottery_run_id;
+		
+		private string _title;
+		
+		private System.Nullable<System.DateTime> _ctime;
+		
+		private string _item;
+		
+		private string _prize;
+		
+		private System.Nullable<decimal> _val;
+		
+		private System.Nullable<bool> _isget;
+		
+		private System.Nullable<System.DateTime> _gtime;
+		
+		private string _remark;
+		
+		private EntityRef<x_user> _x_user;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onuser_prize_idChanging(long value);
+    partial void Onuser_prize_idChanged();
+    partial void Onuser_idChanging(System.Nullable<long> value);
+    partial void Onuser_idChanged();
+    partial void Onlottery_run_idChanging(System.Nullable<long> value);
+    partial void Onlottery_run_idChanged();
+    partial void OntitleChanging(string value);
+    partial void OntitleChanged();
+    partial void OnctimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnctimeChanged();
+    partial void OnitemChanging(string value);
+    partial void OnitemChanged();
+    partial void OnprizeChanging(string value);
+    partial void OnprizeChanged();
+    partial void OnvalChanging(System.Nullable<decimal> value);
+    partial void OnvalChanged();
+    partial void OnisgetChanging(System.Nullable<bool> value);
+    partial void OnisgetChanged();
+    partial void OngtimeChanging(System.Nullable<System.DateTime> value);
+    partial void OngtimeChanged();
+    partial void OnremarkChanging(string value);
+    partial void OnremarkChanged();
+    #endregion
+		
+		public x_user_prize()
+		{
+			this._x_user = default(EntityRef<x_user>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_prize_id", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long user_prize_id
+		{
+			get
+			{
+				return this._user_prize_id;
+			}
+			set
+			{
+				if ((this._user_prize_id != value))
+				{
+					this.Onuser_prize_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_prize_id = value;
+					this.SendPropertyChanged("user_prize_id");
+					this.Onuser_prize_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_id", DbType="BigInt")]
+		public System.Nullable<long> user_id
+		{
+			get
+			{
+				return this._user_id;
+			}
+			set
+			{
+				if ((this._user_id != value))
+				{
+					if (this._x_user.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onuser_idChanging(value);
+					this.SendPropertyChanging();
+					this._user_id = value;
+					this.SendPropertyChanged("user_id");
+					this.Onuser_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lottery_run_id", DbType="BigInt")]
+		public System.Nullable<long> lottery_run_id
+		{
+			get
+			{
+				return this._lottery_run_id;
+			}
+			set
+			{
+				if ((this._lottery_run_id != value))
+				{
+					this.Onlottery_run_idChanging(value);
+					this.SendPropertyChanging();
+					this._lottery_run_id = value;
+					this.SendPropertyChanged("lottery_run_id");
+					this.Onlottery_run_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_title", DbType="NVarChar(200)")]
+		public string title
+		{
+			get
+			{
+				return this._title;
+			}
+			set
+			{
+				if ((this._title != value))
+				{
+					this.OntitleChanging(value);
+					this.SendPropertyChanging();
+					this._title = value;
+					this.SendPropertyChanged("title");
+					this.OntitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ctime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> ctime
+		{
+			get
+			{
+				return this._ctime;
+			}
+			set
+			{
+				if ((this._ctime != value))
+				{
+					this.OnctimeChanging(value);
+					this.SendPropertyChanging();
+					this._ctime = value;
+					this.SendPropertyChanged("ctime");
+					this.OnctimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_item", DbType="NVarChar(120)")]
+		public string item
+		{
+			get
+			{
+				return this._item;
+			}
+			set
+			{
+				if ((this._item != value))
+				{
+					this.OnitemChanging(value);
+					this.SendPropertyChanging();
+					this._item = value;
+					this.SendPropertyChanged("item");
+					this.OnitemChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_prize", DbType="NVarChar(200)")]
+		public string prize
+		{
+			get
+			{
+				return this._prize;
+			}
+			set
+			{
+				if ((this._prize != value))
+				{
+					this.OnprizeChanging(value);
+					this.SendPropertyChanging();
+					this._prize = value;
+					this.SendPropertyChanged("prize");
+					this.OnprizeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_val", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> val
+		{
+			get
+			{
+				return this._val;
+			}
+			set
+			{
+				if ((this._val != value))
+				{
+					this.OnvalChanging(value);
+					this.SendPropertyChanging();
+					this._val = value;
+					this.SendPropertyChanged("val");
+					this.OnvalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_isget", DbType="Bit")]
+		public System.Nullable<bool> isget
+		{
+			get
+			{
+				return this._isget;
+			}
+			set
+			{
+				if ((this._isget != value))
+				{
+					this.OnisgetChanging(value);
+					this.SendPropertyChanging();
+					this._isget = value;
+					this.SendPropertyChanged("isget");
+					this.OnisgetChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gtime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> gtime
+		{
+			get
+			{
+				return this._gtime;
+			}
+			set
+			{
+				if ((this._gtime != value))
+				{
+					this.OngtimeChanging(value);
+					this.SendPropertyChanging();
+					this._gtime = value;
+					this.SendPropertyChanged("gtime");
+					this.OngtimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remark", DbType="NVarChar(400)")]
+		public string remark
+		{
+			get
+			{
+				return this._remark;
+			}
+			set
+			{
+				if ((this._remark != value))
+				{
+					this.OnremarkChanging(value);
+					this.SendPropertyChanging();
+					this._remark = value;
+					this.SendPropertyChanged("remark");
+					this.OnremarkChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="x_user_x_user_prize", Storage="_x_user", ThisKey="user_id", OtherKey="user_id", IsForeignKey=true)]
+		public x_user x_user
+		{
+			get
+			{
+				return this._x_user.Entity;
+			}
+			set
+			{
+				x_user previousValue = this._x_user.Entity;
+				if (((previousValue != value) 
+							|| (this._x_user.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._x_user.Entity = null;
+						previousValue.x_user_prize.Remove(this);
+					}
+					this._x_user.Entity = value;
+					if ((value != null))
+					{
+						value.x_user_prize.Add(this);
+						this._user_id = value.user_id;
+					}
+					else
+					{
+						this._user_id = default(Nullable<long>);
+					}
+					this.SendPropertyChanged("x_user");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

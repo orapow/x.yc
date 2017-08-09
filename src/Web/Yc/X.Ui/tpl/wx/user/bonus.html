@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    #parse("wx/_head.html")
+    <title>中奖记录</title>
+    <style>
+        body { background: #f1f1f1; }
+        .c_li { margin-bottom: 10px; background: #fff; padding: 10px; position: relative; font-size: 14px; }
+        .c_cell { padding: 2px 0; }
+        .c_cell b { font-size: 14px; font-weight: bold; }
+        .c_cell span { }
+        .t_border { border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .t_r { text-align: right; }
+        .c_del { padding: 5px 5px 0 0; right: 5px; position: absolute; top: 5px; text-align: right; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="c_list">
+        #foreach($c in $list)
+        <div class="c_li">
+            <div class="c_cell"><b>$c.title</b></div>
+            <div class="c_cell">奖品：<span>$c.prize</span></div>
+            <div class="c_cell">价值：<span>$c.val</span> 元</div>
+            #if($c.remark.length>0)<div class="c_cell">说明：$!c.remark</div>#end
+            <div class="c_cell">中奖时间：<span>$c.ctime</span></div>
+            <div class="c_del">#if($c.isget)已领取<br /><span style="font-size:12px;color:#666;">$c.gtime</span>#else未领取#end</div>
+        </div>
+        #end
+    </div>
+    #parse("wx/_foot.html")
+</body>
+</html>

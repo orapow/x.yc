@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     #parse("wx/_head.html")
-    <title>个人中心</title>
+    <title>#if($cu.type==2)商户中心#else个人中心#end</title>
     <style type="text/css">
         .fudong02 li { position: relative; }
         ul li a { display: block; height: 40px; padding: 0 10px; border-radius: 0; }
@@ -12,13 +12,12 @@
 <body style="background:#faf9f9;">
     <div class="ger">
         <img src="$!cu.headimg" onerror="this.src='/img/wx/gh.png'" />
-        <h2>#if($cu.name.length==0)$cu.nickname#else$cu.name#end</h2>
-        <h2>#if($cu.tel.length==0)<a href="/wx/user/bind.html" style="float:none;display:block;position:initial;">绑定手机号</a>#else$cu.tel#end</h2>
-        <a href="javascript:;" style="color: red;font-size: 16px;right: 20px;">积分：$cu.exp</a>
+        <h2>#if($cu.name.length>0)$cu.name#else$cu.nickname#end</h2>
+        <h2>#if($cu.tel.length>0)$cu.tel#else<a href="/wx/user/bind.html" style="float:none;display:block;position:initial;">绑定手机号</a>#end</h2>
+        <a href="/wx/explog/list.html" style="color: red;font-size: 16px;right: 20px;">积分：$cu.exp</a>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
-    #if($cu.type==1)
     <div class="fudong02">
         <ul>
             <li class="no015"><a href="/wx/order/list-1.html">待付款</a>#if($o1>0)<span class="badge">$!o1</span>#end</li>
@@ -29,24 +28,25 @@
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
-    #end
     <div class="liebiao01" style="margin-top:10px;">
         <ul>
             #if($cu.type==2)
-            <li class="dizhi02"><a href="/wx/arti/detail-1.html"> <p>进货记录</p><img src="/img/wx/tj_13.png" /></a></li>
+            <li class="dizhi02"><a href="/wx/user/qrcode.html"> <p style="background-image:url(/img/wx/qr.png)">邀请二维码</p><img src="/img/wx/tj_13.png" /></a></li>
             #end
             #if($cu.type==1)
-            <li class="dizhi02"><a href="/wx/user/subuser--0.html"><p>分销推广</p><img src="/img/wx/tj_13.png" /></a></li>
+            <li class="dizhi02"><a href="/wx/check.html"><p style="background-image:url(/img/wx/cy.png)">查验真伪</p><img src="/img/wx/tj_13.png" /></a></li>
             #end
-            <li class="dizhi04"><a href="/wx/arti/detail-1.html"> <p>积分兑换</p><img src="/img/wx/tj_13.png" /></a></li>
+            #if($cu.type==2)
+            <li class="dizhi02"><a href="/wx/user/subuser--0.html"><p style="background-image:url(/img/wx/fx.png)">分销推广</p><img src="/img/wx/tj_13.png" /></a></li>#end
+            <li class="dizhi04"><a href="/wx/cash/submit.html"> <p style="background-image:url(/img/wx/jf.png)">积分兑换</p><img src="/img/wx/tj_13.png" /></a></li>
             #if($cu.type==1)
-            <li class="dizhi01"><a href="/wx/"> <p>中奖记录</p><img src="/img/wx/tj_13.png" /></a></li>
+            <li class="dizhi01"><a href="/wx/user/bonus.html"> <p>中奖记录</p><img src="/img/wx/tj_13.png" /></a></li>
             #end
             <li class="dizhi03"><a href="/wx/addr/list.html"> <p>收货地址</p><img src="/img/wx/tj_13.png" /></a></li>
         </ul>
         <div class="clear"></div>
     </div>
-    <div class="liebiao01" style="margin-bottom:70px">
+    <div class="liebiao01" style="margin-bottom:40px">
         <ul>
             #if($cu.type==1)
             <li class="dizhi04"><a href="/wx/arti/detail-1.html"> <p>服务政策</p><img src="/img/wx/tj_13.png" /></a></li>
@@ -54,12 +54,9 @@
             <li class="dizhi05"><a href="tel:$cfg.stel"> <p>联系客服</p><span style="color:#f57629;">$cfg.stel</span></a></li>
         </ul>
     </div>
-    #if($cu.type==2)
-    <div class="qrcode" style="text-align:center;font-size:16px;">
-        <img src="http://upload.qudong.com/2014/0417/1397706506388.gif" />
-        <p style="margin-top:10px;">邀请码：7X33IP</p>
-    </div>
-    #end
+    <br />
+    <br />
+    <br />
     #parse("wx/_foot.html")
     <script>
         $(function () {

@@ -9,11 +9,17 @@ namespace X.App.Com
     {
         public static string SendSms(string to, string content)
         {
-            var url = "https://sms.253.com/msg/send?un=N2626427&pw=XumTEGLPrh81e2&phone={tel}&msg={txt}&rd=1";
+            var url = "http://smssh1.253.com/msg/send/json";
             try
             {
-                url = url.Replace("{tel}", to).Replace("{txt}", content);
-                return Tools.GetHttpData(url);
+                var mb = new
+                {
+                    account = "N6664837",
+                    password = "6ryS3cDq9M1d96",
+                    msg = System.Web.HttpUtility.UrlEncode("【253云通讯】" + content),
+                    phone = to
+                };
+                return Tools.PostHttpData(url, Serialize.ToJson(mb));
             }
             catch (Exception ex)
             {

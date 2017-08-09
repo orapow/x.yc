@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     #parse("mgr/com/_head.html")
-    <title>提现记录 - $cfg.name</title>
+    <title>兑换记录</title>
     <style type="text/css">
         td.ops { white-space: normal; }
         .gd { width: 40px; border: 1px solid #ff6a00; float: left; margin: 0 2px 2px 0; }
@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="title">
-        <span class="main">提现记录</span> - <span class="sub">会员管理</span>
+        <span class="main">提现记录</span> - <span class="sub">兑换记录</span>
     </div>
     <div class="search">
         <x:form>
@@ -45,9 +45,9 @@
             fs: [
                 { t: "用户", f: "<img src='{up}' style='height:45px;'/> {un}{name}", w: 120, align: "left" },
                 { t: "提现金额", f: "{amount}", w: 80, align: "center" },
-                { t: "发起时间", f: "{ctime}", w: 80, align: "center" },
-                { t: "审核状态", f: "{status}", w: 60, align: "center" },
-                { t: "备注", f: "{remark}", w: 320, align: "left" },
+                { t: "发起时间", f: "{ctime}", w: 120, align: "center" },
+                { t: "审核状态", f: "{statusname}", w: 60, align: "center" },
+                { t: "备注", f: "{remark}", w: 420, align: "left" },
             ],
             btns: []
         };
@@ -76,14 +76,14 @@
 
         function doRefuse(id) {
             x.input("请输入拒绝原因", function (r) {
-                x.doapi("mgr.cash.refuse", { deposit_id: id, reason: r }, function (d) {
+                x.doapi("mgr.cash.refuse", { id: id, reason: r }, function (d) {
                     if (!d.issucc) return;
                     g.getlist();
                 })
             }, 2, true);
         }
         function doAccept(id) {
-            x.doapi("mgr.cash.accept", { deposit_id: id }, function (d) {
+            x.doapi("mgr.cash.accept", { id: id }, function (d) {
                 if (!d.issucc) return;
                 g.getlist();
             });

@@ -5,7 +5,7 @@ using System.Text;
 using X.Core.Utility;
 
 namespace X.App.Views.wx.user {
-    public class mpwd : _wx {
+    public class bind : _wx {
         protected override void InitDict() {
             base.InitDict();
             var key = Tools.GetRandRom(12, 3);

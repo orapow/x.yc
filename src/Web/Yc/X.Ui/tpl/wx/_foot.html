@@ -3,7 +3,7 @@
         <li class="no08"><a href="/wx/index.html">首页</a></li>
         <li class="no09"><a href="/wx/user/cart.html">购物车</a>#if($ptc>0)<span class="badge">$!ptc</span>#end</li>
         <li class="no011"><a href="/wx/goods/list.html">商品库</a></li>
-        <li class="no012"><a href="/wx/bounds.html">中奖</a></li>
+        <li class="no012"><a href="/wx/bonus.html">中奖</a></li>
         <li class="no013"><a href="/wx/user/index.html">我的</a></li>
     </ul>
 </div>
@@ -18,7 +18,7 @@
         timestamp: '$!wx_ts', // 必填，生成签名的时间戳
         nonceStr: '$!wx_no', // 必填，生成签名的随机串
         signature: '$!wx_sign',// 必填，签名，见附录1
-        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "scanQRCode"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
     sharedata = {};

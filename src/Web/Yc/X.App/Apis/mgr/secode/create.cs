@@ -37,6 +37,7 @@ namespace X.App.Apis.mgr.secode
                 var sc = new x_secode()
                 {
                     batch = batch,
+                    scount = 0,
                     incode = i,
                     outcode = Secret.MD5(no + "%c&iz4VV2XIzItlK")
                 };

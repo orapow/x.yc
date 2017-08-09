@@ -10,15 +10,12 @@
         .item img.a { float: right; height: 35px; vertical-align: middle; margin-right: 10px; margin-top: 5px; }
         .item.up { height: 35px; }
         .item.up img { height: 35px; vertical-align: middle; }
-        .btn { margin: 0 10px 20px 10px; border-radius: 5px; text-align: center; }
+        .btn { margin: 10px; border-radius: 5px; text-align: center; }
     </style>
 </head>
 <body>
     <div class="top"><a href="/wx/user/index.html"></a><h2>分销推广</h2></div>
-    <div class="tip">
-        我共发展了56人
-    </div>
-    <a href="/wx/user/inviter.html" class="btn">我要分销</a>
+    <a href="/wx/user/qrcode.html" class="btn">我要分销</a>
     #if($upuser.id>0)<a class="item up" href="subuser-${upuser.invter}-${plv}.html">上级：<img src="$upuser.headimg" /> $upuser.nickname</a><hr style="margin:10px; border-bottom:none;border-color:#ccc;" />#end
     #foreach($u in $items)
     <a class="item" href="#if($lv<=9)subuser-${u.id}-${nlv}.html#else javascript:;#end">

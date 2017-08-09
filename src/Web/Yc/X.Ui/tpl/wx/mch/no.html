@@ -11,7 +11,7 @@
     <div class="guanli">
         <div class="ger">
             <img src="$!cu.headimg" onerror="this.src='/img/wx/gh.png'" style="display:block;float:none;margin:0 auto;" />
-            <h2>#if($cu.name.length==0)$cu.nickname#else$cu.name#end</h2>
+            <h2>#if($cu.name.length>0)cu.name#else$cu.nickname$#end</h2>
             <div class="clear"></div>
         </div>
         <div class="no">

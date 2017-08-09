@@ -6,7 +6,7 @@ using X.Core.Utility;
 
 namespace X.App.Views.wx
 {
-    public class bounds : _wx
+    public class bonus : _wx
     {
     }
 }

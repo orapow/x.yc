@@ -14,40 +14,33 @@
 </head>
 <body>
     <div class="title">
-        <span class="main">优辅家管理</span> - <span class="sub">首页</span>
+        <span class="main">$cfg.name</span> - <span class="sub">首页</span>
     </div>
     <div class="pl">
         <h3>快捷方式</h3>
         <a href="/mgr/goods/edit.html" class="btn"><i class="icon-plus"></i>发布商品</a>
-        <a href="/mgr/sale/list.html" class="btn"><i class="icon-ambulance"></i>促销管理</a>
+        <a href="/mgr/goods/list.html" class="btn"><i class="icon-gift"></i>商品管理</a>
+        <a href="/mgr/sale/list.html" class="btn"><i class="icon-book"></i>商品防伪</a>
         <a href="/mgr/refund/list.html" class="btn">
             <i class="icon-legal"></i>
             #if($refundCount!=0)<span class="label">$!refundCount</span>#end
             退款审核
         </a>
-        <a href="/mgr/deposit/list-2.html" class="btn">
-            <i class="icon-legal"></i>
-            #if($chgCount!=0)<span class="label">$chgCount</span>#end
-            充值审核
+        #if($cfg.cash_audit==1)
+        <a href="/mgr/cash/list.html" class="btn">
+            <i class="icon-exchange"></i>
+            #if($auditCount!=0)<span class="label">$auditCount</span>#end
+            兑换审核
         </a>
+        #end
         <a href="/mgr/order/list-2.html" class="btn">
-            <i class="icon-check"></i>
-            #if($confirmCount!=0)<span class="label">$!confirmCount</span>#end
-            待确认
-        </a>
-        <a href="/mgr/order/list-3.html" class="btn">
             <i class="icon-shopping-cart"></i>
             #if($sendCount!=0)<span class="label">$!sendCount</span>#end
             待发货
         </a>
-        <a href="/mgr/order/list-4.html" class="btn">
-            <i class="icon-money"></i>
-            #if($receiveCount!=0)<span class="label">$!receiveCount</span>#end
-            待收款
-        </a>
-        <a href="/mgr/sman/stati.html" class="btn"><i class="icon-user"></i>业务员统计</a>
+        <a href="/mgr/setup.html" class="btn"><i class="icon-cog"></i>系统设置</a>
     </div>
-    <table>
+    <!--<table>
         <tr>
             <td style="width: 50%;">
                 <div class="pl" style="margin-right:10px;">
@@ -64,7 +57,7 @@
                 </div>
             </td>
         </tr>
-    </table>
+    </table>-->
     <script src="/js/highcharts.js"></script>
     <script type="text/javascript">
         $(function () {

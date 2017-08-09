@@ -216,6 +216,8 @@ namespace X.Core.Utility
                 using (var wr = new StreamWriter(rq.GetRequestStream()))
                 {
                     wr.WriteLine(data);
+                    wr.Flush();
+                    wr.Close();
                 }
 
                 var rp = (HttpWebResponse)rq.GetResponse();
@@ -223,7 +225,7 @@ namespace X.Core.Utility
                 var rspstr = "";
                 using (var reader = new StreamReader(rp.GetResponseStream()))
                 {
-                    rspstr = reader.ReadToEnd(); ;
+                    rspstr = reader.ReadToEnd();
                 }
                 return rspstr;
             }

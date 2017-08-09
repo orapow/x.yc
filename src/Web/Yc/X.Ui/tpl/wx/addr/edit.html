@@ -46,6 +46,13 @@
     #parse("wx/_foot.html")
     <script type="text/javascript">
 
+        var ar = {
+            p: "$!ent.sheng",
+            c: "$!ent.shi",
+            x: "$!ent.qu",
+            s: "$!ent.zhen",
+        }
+
         function loadcity(up, p) {
             var items = $(".select03." + p);
             items.empty();
@@ -55,7 +62,8 @@
                 if (d.items.length > 0) items.html("<option value=''>请选择</option>");
                 for (var i in d.items) {
                     var ct = d.items[i];
-                    items.append('<option value="' + ct.value + '" ' + (ct.name == "$ent.zhen" ? "selected='selected'" : "") + '>' + ct.name + '</option>');
+                    items.append('<option value="' + ct.value + '">' + ct.name + '</option>');
+                    if (ct.name == ar[p]) { items.val(ct.value); items.change(); }
                 }
                 if (p == "s" && d.items.length > 0) $(".xiug01.st").show();
                 else $(".xiug01.st").hide();

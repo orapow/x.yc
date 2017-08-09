@@ -26,11 +26,11 @@ namespace X.Data.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.254;Initial Catalog=x.yc;Persist Security Info=True;User ID" +
-            "=sa;Password=123")]
-        public string x_ycConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\X;Initial Catalog=x.yc;Persist Security Info=True;User ID=sa;Passwo" +
+            "rd=sa123")]
+        public string x_yc {
             get {
-                return ((string)(this["x_ycConnectionString"]));
+                return ((string)(this["x_yc"]));
             }
         }
     }

@@ -18,7 +18,12 @@
             #if($cu.audit==1)
             <span style="color:gray;">您的资料已经提交，正在审核中...<br />预计2个工作日。提交时间：<br />（$cu.atime.tostring("yyyy-MM-dd HH:mm:ss")）</span>
             #elseif($cu.audit==2)
-            <span style="color:green;">恭喜！您已经成为我们的商户用户，感谢有你。</span>
+            <span style="color:green;">
+                恭喜！您已经成为我们的商户用户，感谢有你。
+                <br />
+                <br />
+                <a href="/wx/user/index.html" class="btn" style="background-color:green;">个人中心</a>
+            </span>
             #elseif($cu.audit==3)
             <span style="color:red;">您的商户资料被驳回！！！<br />原因为：$cu.remark</span>
             <br />

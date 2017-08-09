@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    #parse("wx/_head.html")
+    <title>积分兑换</title>
+    <style type="text/css">
+        p { margin: 10px; display: block; text-align: center; }
+        .btn { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="top"><a href="/wx/user/index.html"></a><h2>积分兑换</h2></div>
+    <p style="margin-top:30px;">
+        <img src="/img/wx/jf.png" style="width:80px;" />
+    </p>
+    <p style="font-size:16px;line-height:32px;">
+        您可用积分为<br /><span style="font-size:18px;font-weight:bold;color:red;">$ce</span>
+    </p>
+    <p style="line-height: 32px;font-size: 14px;margin-bottom:15px;">
+        <input type="text" id="tb_val" placeholder="您最多可兑换$ce分" style="border:1px solid #ccc;padding:10px;width:80%;" /><br />
+        <span>（1积分=$cfg.credit元）</span>
+    </p>
+    <p>
+        <span class="btn" onclick="do_submit()">立即兑换</span>
+        <a href="/wx/cash/list.html" style="margin-top:20px;display:block;font-size:16px;">兑换记录</a>
+    </p>
+    #parse("wx/_foot.html")
+    <script>
+        function do_submit() {
+            var val = parseFloat($("#tb_val").val());
+            if (!val) { alert("请输入大于0的小数"); return; }
+            if (val > $ce) { alert("请输入小于等于$ce的积分"); return; }
+            if (!confirm("是否要将" + val + "积分兑换成金额" + (val * $cfg.credit) + "元？")) return;
+            doapi("wx.cash.submit", { val: val }, function (d) {
+                if (!d.issucc) return;
+                alert("提现申请已经提交，请等待审核！！！");
+                document.location.href = "list.html";
+            });
+        }
+    </script>
+</body>
+</html>
